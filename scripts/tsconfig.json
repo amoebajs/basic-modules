@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "importHelpers": true,
+    "outDir": "../scripts-build",
+    "baseUrl": "../",
+    "paths": {
+      "@amoebajs/builder": ["../builder/dist/index"],
+      "@amoebajs/builder/*": ["../builder/dist/*"]
+    }
+  },
+  "include": ["."]
+}

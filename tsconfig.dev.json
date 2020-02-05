@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "paths": {
+      "@amoebajs/builder": ["../builder/src/index"],
+      "@amoebajs/builder/*": ["../builder/src/*"]
+    }
+  }
+}
