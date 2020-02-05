@@ -1,10 +1,13 @@
 import { Attach, Component, Input, JsxElementGenerator, PropAttach, Group } from "@amoebajs/builder";
 import { BasicLayout } from "./basic-layout.component";
-import { Extends } from "@amoebajs/builder/core";
 
-@Component({ name: "grid-layout", displayName: "网格布局", version: "0.0.1-beta.0" })
+@Component({
+  name: "grid-layout",
+  displayName: "网格布局",
+  version: "0.0.1-beta.0",
+  parent: BasicLayout,
+})
 @Group({ name: "grid", displayName: "网格属性" })
-@Extends(BasicLayout)
 export class GridLayout extends BasicLayout {
   @Input({ name: "rowCount", group: "grid", displayName: "行数量" })
   gridRowCount: number = 1;

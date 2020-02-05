@@ -1,7 +1,6 @@
 import { Component, Input, Group } from "@amoebajs/builder";
 import { getEnumValues } from "@amoebajs/builder/utils";
 import { BasicLayout } from "./basic-layout.component";
-import { Extends } from "@amoebajs/builder/core";
 
 export enum StackDirection {
   Horizontal = "row",
@@ -20,9 +19,13 @@ export enum ContentAlign {
   End = "end",
 }
 
-@Component({ name: "stack-layout", displayName: "线性布局", version: "0.0.1-beta.0" })
+@Component({
+  name: "stack-layout",
+  displayName: "线性布局",
+  version: "0.0.1-beta.0",
+  parent: BasicLayout,
+})
 @Group({ name: "stack", displayName: "线性属性" })
-@Extends(BasicLayout)
 export class StackLayout extends BasicLayout {
   @Input({ name: "contentAlign", displayName: "内容排布样式", group: "stack", useEnums: getEnumValues(ContentAlign) })
   stackContentAlign: ContentAlign = ContentAlign.Start;
