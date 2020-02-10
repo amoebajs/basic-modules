@@ -1,7 +1,5 @@
 import ts from "typescript";
-import { Directive, ReactDirective, Input } from "@amoebajs/builder";
-import { TYPES } from "@amoebajs/builder/utils/constants";
-import { classCase } from "@amoebajs/builder/utils/case";
+import { Utils, Directive, ReactDirective, Input } from "@amoebajs/builder";
 
 @Directive({ name: "custom-click", displayName: "自定义点击" })
 export class CustomClickDirective extends ReactDirective {
@@ -37,12 +35,12 @@ export class CustomClickDirective extends ReactDirective {
       return ts.createArrowFunction(
         [],
         [],
-        [ts.createParameter([], [], undefined, ts.createIdentifier(input), undefined, TYPES.Any, undefined)],
+        [ts.createParameter([], [], undefined, ts.createIdentifier(input), undefined, Utils.TYPES.Any, undefined)],
         undefined,
         undefined,
         ts.createParen(
           ts.createCall(
-            ts.createIdentifier("set" + classCase(this.targetName)),
+            ts.createIdentifier("set" + Utils.classCase(this.targetName)),
             [],
             [
               ts.createCall(

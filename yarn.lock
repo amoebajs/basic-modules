@@ -2,10 +2,10 @@
 # yarn lockfile v1
 
 
-"@amoebajs/builder@^0.0.2-alpha.1581333932562":
-  version "0.0.2-alpha.1581333932562"
-  resolved "https://registry.npmjs.org/@amoebajs/builder/-/builder-0.0.2-alpha.1581333932562.tgz#87552be3e8c1f4bcf9c949de3a9fa6cb358e335e"
-  integrity sha512-W1al6rY0ItXQyvmyvhbZa+kV8+JFwAU7SxoPBpmA7u1kKqU3c/WjcUTnAWR0edihbjZnSKoogzYj1BEEIVtWMg==
+"@amoebajs/builder@^0.0.2-alpha.1581340873629":
+  version "0.0.2-alpha.1581340873629"
+  resolved "https://registry.npmjs.org/@amoebajs/builder/-/builder-0.0.2-alpha.1581340873629.tgz#dd5e6693185f6e14b69f9cc7d48ab9c1e5a132e3"
+  integrity sha512-mX9A9scMmgY3FQFh98sQ7hYS8mfrxLxsWnVu1i1T6wvc0xbdKOuEmTgyuqc/YklpCgOBTCz1iTHf7Zf5A+1eZA==
   dependencies:
     "@bonbons/di" "2.0.0-beta.3"
     "@types/cheerio" "^0.22.15"

@@ -1,5 +1,4 @@
-import { DOMS, getEnumValues } from "@amoebajs/builder/utils";
-import { Component, ReactComponent, Group, Input } from "@amoebajs/builder";
+import { Utils, Component, ReactComponent, Group, Input } from "@amoebajs/builder";
 
 export enum Position {
   Top = "top",
@@ -10,7 +9,7 @@ export enum Position {
 }
 
 export const PositionStringRules = {
-  key: getEnumValues(Position),
+  key: Utils.getEnumValues(Position),
   value: "string",
 };
 
@@ -72,7 +71,7 @@ export class BasicElement extends ReactComponent {
 
   async onInit() {
     await super.onInit();
-    this.setTagName(DOMS.Div);
+    this.setTagName(Utils.DOMS.Div);
     this.addAttributesWithMap({ style: this.resolveRootElementStyle() });
   }
 

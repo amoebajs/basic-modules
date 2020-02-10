@@ -1,5 +1,4 @@
-import { Component, Input, Group } from "@amoebajs/builder";
-import { getEnumValues } from "@amoebajs/builder/utils";
+import { Component, Input, Group, Utils } from "@amoebajs/builder";
 import { BasicLayout } from "./basic-layout.component";
 
 export enum StackDirection {
@@ -27,13 +26,18 @@ export enum ContentAlign {
 })
 @Group({ name: "stack", displayName: "线性属性" })
 export class StackLayout extends BasicLayout {
-  @Input({ name: "contentAlign", displayName: "内容排布样式", group: "stack", useEnums: getEnumValues(ContentAlign) })
+  @Input({
+    name: "contentAlign",
+    displayName: "内容排布样式",
+    group: "stack",
+    useEnums: Utils.getEnumValues(ContentAlign),
+  })
   stackContentAlign: ContentAlign = ContentAlign.Start;
 
-  @Input({ name: "direction", displayName: "布局方向", group: "stack", useEnums: getEnumValues(StackDirection) })
+  @Input({ name: "direction", displayName: "布局方向", group: "stack", useEnums: Utils.getEnumValues(StackDirection) })
   stackDirection: StackDirection = StackDirection.Vertical;
 
-  @Input({ name: "scroll", displayName: "滚动条样式", group: "stack", useEnums: getEnumValues(StackScroll) })
+  @Input({ name: "scroll", displayName: "滚动条样式", group: "stack", useEnums: Utils.getEnumValues(StackScroll) })
   stackScroll: StackScroll = StackScroll.Auto;
 
   protected getElementSelfStyle() {

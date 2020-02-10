@@ -1,5 +1,4 @@
-import { Component, Input, ReactComponent } from "@amoebajs/builder";
-import { IJsxAttrs } from "@amoebajs/builder/utils";
+import { Component, Input, ReactComponent, Utils } from "@amoebajs/builder";
 // import { CompositionList } from "#core";
 // import { ZentBaseCssDirective } from "../base/zent-base-css.directive";
 
@@ -9,7 +8,7 @@ export const enum SupportedFormFields {
 
 export interface IFormFieldOptions {
   type: SupportedFormFields;
-  props: IJsxAttrs;
+  props: Utils.IJsxAttrs;
 }
 
 @Component({ name: "zent-form", displayName: "表单" })
