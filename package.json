@@ -13,9 +13,10 @@
   "scripts": {
     "clear:dist": "npx rimraf dist",
     "update:core": "yarn add @amoebajs/builder -D",
-    "webpack:build": "cross-env ENV_MODE=build TS_PROJECT=scripts/tsconfig.json npx ts-node -r tsconfig-paths/register scripts/build.ts",
-    "webpack:watch": "cross-env ENV_MODE=watch TS_PROJECT=scripts/tsconfig.json npx ts-node -r tsconfig-paths/register scripts/build.ts",
-    "build:only": "cross-env TS_PROJECT=scripts/tsconfig.json npx ts-node -r tsconfig-paths/register scripts/compile.ts",
+    "webpack:build": "cross-env ENV_MODE=build ts-node -r ./scripts/tspaths scripts/build.ts",
+    "webpack:watch": "cross-env ENV_MODE=watch ts-node -r ./scripts/tspaths scripts/build.ts",
+    "build:src": "cross-env ts-node -r ./scripts/tspaths scripts/compile.ts",
+    "build:npm": "cross-env ts-node scripts/compile.ts",
     "compile": "tsc",
     "build": "yarn clear:dist && npx copy README.md dist && npx copy LICENSE dist && yarn compile",
     "pub": "yarn build && node scripts/stable.publish.js",

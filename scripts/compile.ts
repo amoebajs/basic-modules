@@ -5,7 +5,7 @@ import chalk from "chalk";
 import { Factory } from "@amoebajs/builder";
 import { CommonModule, LayoutModule, ZentModule } from "../src";
 
-const openfile = process.argv.find(i => i.startsWith("--open=")) || "--open=demo.yaml";
+const openfile = process.argv.find(i => i.startsWith("--open=")) || "--open=layout.yaml";
 const format = process.argv.find(i => i.startsWith("--format=")) || "--format=true";
 const filemode = process.argv.find(i => i.startsWith("--mode=")) || "--mode=ts";
 
