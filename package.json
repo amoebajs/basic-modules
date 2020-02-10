@@ -1,6 +1,6 @@
 {
   "name": "@amoebajs/basic-modules",
-  "version": "0.0.1-alpha.1581341237070",
+  "version": "0.0.1-alpha.1581343256615",
   "main": "index.js",
   "types": "index.d.ts",
   "repository": "https://github.com/amoebajs/builder.git",
