@@ -72,7 +72,7 @@ page:
     - ref: GridLayout
       id: GridLayoutChild01
       input:
-        baisc:
+        basic:
           background:
             type: literal
             expression: "#fea500"

@@ -1,17 +1,21 @@
 import { Utils, Component, ReactComponent, Group, Input } from "@amoebajs/builder";
 
 export enum Position {
+  All = "all",
   Top = "top",
   Bottom = "bottom",
   Left = "left",
   Right = "right",
-  All = "all",
 }
 
 export const PositionStringRules = {
   key: Utils.getEnumValues(Position),
   value: "string",
 };
+
+interface IPositionData extends Record<typeof Position[keyof typeof Position], string | undefined> {
+  all: string;
+}
 
 @Component({
   name: "basic-element",
@@ -91,18 +95,29 @@ export class BasicElement extends ReactComponent {
     };
   }
 
-  protected resolvePositions(pos: [Position, string][]) {
+  protected resolvePositionData(pos: [Position, string][]): IPositionData {
     const positionAll = pos.find(i => i[0] === Position.All);
     const defaults = (positionAll && positionAll[1]) ?? "0px";
-    const { top, bottom, left, right } = pos.reduce<any>((p, c) => ({ ...p, [c[0]]: c[1] }), {});
-    return `${top || defaults} ${right || defaults} ${bottom || defaults} ${left || defaults}`;
+    return {
+      ...pos.reduce<any>((p, c) => ({ ...p, [c[0]]: c[1] }), {}),
+      all: defaults,
+    };
+  }
+
+  protected resolvePositions(pos: [Position, string][]) {
+    const { all, top, bottom, left, right } = this.resolvePositionData(pos);
+    return `${top || all} ${right || all} ${bottom || all} ${left || all}`;
   }
 
   protected getElementBorder() {
+    const borderWidth = this.resolvePositionData(this.layoutBorderWidth);
+    const borderStyle = this.resolvePositionData(this.layoutBorderStyle);
+    const borderColor = this.resolvePositionData(this.layoutBorderColor);
     return {
-      borderWidth: this.resolvePositions(this.layoutBorderWidth),
-      borderStyle: this.resolvePositions(this.layoutBorderStyle),
-      borderColor: this.resolvePositions(this.layoutBorderColor),
+      borderTop: readBorderPosData(borderWidth, borderStyle, borderColor, Position.Top),
+      borderBottom: readBorderPosData(borderWidth, borderStyle, borderColor, Position.Bottom),
+      borderLeft: readBorderPosData(borderWidth, borderStyle, borderColor, Position.Left),
+      borderRight: readBorderPosData(borderWidth, borderStyle, borderColor, Position.Right),
     };
   }
 
@@ -117,4 +132,13 @@ export class BasicElement extends ReactComponent {
       padding: this.resolvePositions(this.layoutPadding),
     };
   }
+}
+
+function readBorderPosData(
+  width: IPositionData,
+  style: IPositionData,
+  color: IPositionData,
+  key: keyof Omit<IPositionData, "all">,
+) {
+  return `${width[key] || width.all} ${style[key] || style.all} ${color[key] || color.all}`;
 }
