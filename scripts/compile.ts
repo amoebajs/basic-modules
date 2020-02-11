@@ -1,3 +1,4 @@
+import "./watch-config";
 import * as fs from "fs";
 import * as path from "path";
 import jsyaml from "js-yaml";
