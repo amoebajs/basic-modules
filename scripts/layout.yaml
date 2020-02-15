@@ -23,6 +23,11 @@ directives:
     name: zent-base-css
     module: zent-module
     version: "0.0.1"
+compositions:
+  - id: DemoComposition
+    name: demo-composition
+    module: ambjs-layout-module
+    version: "0.0.1-beta.0"
 page:
   ref: GridLayout
   id: GridLayoutPageRoot
@@ -139,13 +144,8 @@ page:
             expression:
               - [all, hidden]
               - [bottom, solid]
-    - ref: GridLayout
+    - ref: DemoComposition
       id: GridLayoutChild03
-      input:
-        basic:
-          background:
-            type: literal
-            expression: "rgb(254, 38, 76)"
     - ref: GridLayout
       id: GridLayoutChild04
       input:
