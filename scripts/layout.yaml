@@ -146,6 +146,10 @@ page:
               - [bottom, solid]
     - ref: DemoComposition
       id: GridLayoutChild03
+      input:
+        loadingStateName:
+          type: literal
+          expression: objectState.b
     - ref: GridLayout
       id: GridLayoutChild04
       input:

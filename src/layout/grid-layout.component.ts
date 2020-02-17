@@ -1,6 +1,21 @@
 import { Attach, Component, Input, JsxElementGenerator, PropAttach, Group } from "@amoebajs/builder";
 import { BasicLayout } from "./basic-layout.component";
 
+const isDoubleBigThanOne = (v: any) => {
+  const num = parseFloat(v);
+  return !Number.isNaN(num) && num >= 1;
+};
+
+const isDoubleBetweenOneAnd100 = (v: any) => {
+  const num = parseInt(v, 10);
+  return !Number.isNaN(num) && num >= 1;
+};
+
+const ValidRange = {
+  key: isDoubleBigThanOne,
+  value: isDoubleBetweenOneAnd100,
+};
+
 @Component({
   name: "grid-layout",
   displayName: "网格布局",
@@ -21,39 +36,23 @@ export class GridLayout extends BasicLayout {
   @Input({ name: "columnGap", group: "grid", displayName: "列间隔" })
   gridColumnGap: string = "0px";
 
-  @Input({
-    name: "rowSizes",
-    group: "grid",
-    displayName: "行尺寸",
-    useMap: {
-      key: v => Number.isInteger(v) && v >= 1,
-      value: v => v >= 0 && v <= 100,
-    },
-  })
-  gridRowSizes: Array<[number, number]> = [[1, 100]];
+  @Input({ name: "rowSizes", group: "grid", displayName: "行尺寸", useMap: ValidRange })
+  gridRowSizes: Array<[string, string | number]> = [["1", "100"]];
 
-  @Input({
-    name: "columnSizes",
-    group: "grid",
-    displayName: "列尺寸",
-    useMap: {
-      key: v => Number.isInteger(v) && v >= 1,
-      value: v => v >= 0 && v <= 100,
-    },
-  })
-  gridColumnSizes: Array<[number, number]> = [[1, 100]];
+  @Input({ name: "columnSizes", group: "grid", displayName: "列尺寸", useMap: ValidRange })
+  gridColumnSizes: Array<[string, string | number]> = [["1", "100"]];
 
   @Attach({ name: "rowSpan", displayName: "行跨度" })
-  childRowSpan: PropAttach<number> = new PropAttach(1);
+  childRowSpan: PropAttach<number | string> = new PropAttach(1);
 
   @Attach({ name: "columnSpan", displayName: "列跨度" })
-  childColumnSpan: PropAttach<number> = new PropAttach(1);
+  childColumnSpan: PropAttach<number | string> = new PropAttach(1);
 
   @Attach({ name: "rowStart", displayName: "行起始位置" })
-  childRowStart: PropAttach<number> = new PropAttach(1);
+  childRowStart: PropAttach<number | string> = new PropAttach(1);
 
   @Attach({ name: "columnStart", displayName: "行结束位置" })
-  childColumnStart: PropAttach<number> = new PropAttach(1);
+  childColumnStart: PropAttach<number | string> = new PropAttach(1);
 
   protected getElementSelfStyle() {
     return {
@@ -95,14 +94,14 @@ export class GridLayout extends BasicLayout {
 
   private calcRowsSize() {
     return this.gridRowSizes
-      .sort((a, b) => a[0] - b[0])
+      .sort((a, b) => parseFloat(<any>a[0]) - parseFloat(<any>b[0]))
       .map(([, v]) => v + "%")
       .join(" ");
   }
 
   private calcColumnsSize() {
     return this.gridColumnSizes
-      .sort((a, b) => a[0] - b[0])
+      .sort((a, b) => parseFloat(<any>a[0]) - parseFloat(<any>b[0]))
       .map(([, v]) => v + "%")
       .join(" ");
   }

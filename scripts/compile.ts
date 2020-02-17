@@ -7,7 +7,7 @@ import { Factory } from "@amoebajs/builder";
 import { CommonModule, LayoutModule, ZentModule } from "../src";
 
 const openfile = process.argv.find(i => i.startsWith("--open=")) || "--open=layout.yaml";
-const format = process.argv.find(i => i.startsWith("--format=")) || "--format=true";
+const format = process.argv.find(i => i.startsWith("--format=")) || "--format=false";
 const filemode = process.argv.find(i => i.startsWith("--mode=")) || "--mode=ts";
 
 const demoConf = jsyaml.load(fs.readFileSync(path.resolve(__dirname, openfile.slice(7))).toString());
