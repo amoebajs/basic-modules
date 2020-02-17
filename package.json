@@ -1,8 +1,9 @@
 {
   "name": "@amoebajs/basic-modules",
-  "version": "0.0.1-alpha.1581951113337",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "version": "0.0.1-alpha.1581953676275",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "types": "es/index.d.ts",
   "repository": "https://github.com/amoebajs/builder.git",
   "contributors": [
     "bigmogician <bigmogician@outlook.com>",
@@ -20,7 +21,10 @@
     "watch:npm": "tsnd --respawn -r ./scripts/tspaths-npm scripts/compile.ts",
     "build:npm": "ts-node -r ./scripts/tspaths-npm scripts/compile.ts",
     "compile": "tsc",
-    "build": "yarn clear:dist && npx copy README.md dist && npx copy LICENSE dist && yarn compile",
+    "build:pre": "yarn clear:dist && npx copy README.md dist && npx copy LICENSE dist",
+    "build:es": "tsc --project tsconfig.es.json",
+    "build:lib": "tsc --project tsconfig.json",
+    "build": "yarn build:pre && yarn build:es && yarn build:lib",
     "pub": "yarn build && node scripts/stable.publish.js",
     "rc": "yarn build && node scripts/rc.publish.js"
   },

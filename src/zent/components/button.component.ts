@@ -1,5 +1,4 @@
-import { Component, ReactComponent, Input } from "@amoebajs/builder";
-import { is } from "@amoebajs/builder/es/utils";
+import { Component, ReactComponent, Input, Utils } from "@amoebajs/builder";
 
 type Decide = "||" | "??";
 
@@ -90,7 +89,7 @@ export class ZentButtonComponent extends ReactComponent {
 
   private useStringProp(prop: string, input: string[] | string | boolean, decide: Decide = "||"): string {
     let value = "";
-    if (is.array(input)) value = input.join(" ");
+    if (Utils.is.array(input)) value = input.join(" ");
     else value = String(input);
     return this.useDefaultProp(prop, `"${value}"`, decide);
   }
