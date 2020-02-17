@@ -1,11 +1,12 @@
 import { Module } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "./directives/base-css.directive";
+import { ZentButtonComponent } from "./components/button.component";
 
 @Module({
   name: "zent-module",
   displayName: "Zent模块",
   provider: "react",
-  components: [],
+  components: [ZentButtonComponent],
   directives: [ZentBaseCssDirective],
   dependencies: {
     zent: "^8.0.0",

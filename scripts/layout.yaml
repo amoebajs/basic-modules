@@ -11,7 +11,7 @@ components:
     module: ambjs-layout-module
     version: 0.0.1-beta.0
   - id: ZentButton
-    name: zent-button
+    name: button
     module: zent-module
     version: "0.0.1"
 directives:
@@ -20,7 +20,7 @@ directives:
     module: ambjs-common-module
     version: "0.0.1-beta.0"
   - id: ZentCssImport
-    name: zent-base-css
+    name: base-css
     module: zent-module
     version: "0.0.1"
 compositions:
