@@ -30,7 +30,7 @@ compositions:
     version: "0.0.1-beta.0"
 page:
   ref: GridLayout
-  id: GridLayoutPageRoot
+  id: App
   slot: app
   input:
     basic:
@@ -150,6 +150,13 @@ page:
         loadingStateName:
           type: literal
           expression: objectState.b
+      # children:
+      #   - ref: DemoComposition
+      #     id: Ddddddd01
+      #     input:
+      #       loadingStateName:
+      #         type: literal
+      #         expression: objectState.b
     - ref: GridLayout
       id: GridLayoutChild04
       input:
