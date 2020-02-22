@@ -26,6 +26,10 @@ export enum ContentAlign {
 })
 @Group({ name: "stack", displayName: "线性属性" })
 export class StackLayout extends BasicLayout {
+  /**
+   * ### 内容排布样式
+   * - 默认值：`"start"`
+   **/
   @Input({
     name: "contentAlign",
     displayName: "内容排布样式",
@@ -34,9 +38,17 @@ export class StackLayout extends BasicLayout {
   })
   stackContentAlign: ContentAlign = ContentAlign.Start;
 
+  /**
+   * ### 布局方向
+   * - 默认值：`"column"`
+   **/
   @Input({ name: "direction", displayName: "布局方向", group: "stack", useEnums: Utils.getEnumValues(StackDirection) })
   stackDirection: StackDirection = StackDirection.Vertical;
 
+  /**
+   * ### 滚动条样式
+   * - 默认值：`"auto"`
+   **/
   @Input({ name: "scroll", displayName: "滚动条样式", group: "stack", useEnums: Utils.getEnumValues(StackScroll) })
   stackScroll: StackScroll = StackScroll.Auto;
 

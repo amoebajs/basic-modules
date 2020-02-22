@@ -24,15 +24,33 @@ interface IPositionData extends Record<typeof Position[keyof typeof Position], s
 })
 @Group({ name: "basic", displayName: "基础属性" })
 export class BasicElement extends ReactComponent {
+  /**
+   * ### 组件宽度
+   * - 单位：`px` / `vw` / `%`
+   * - 默认值：`undefined`
+   **/
   @Input({ name: "width", group: "basic", displayName: "组件宽度" })
   layoutWidth!: string;
 
+  /**
+   * ### 组件高度
+   * - 单位：`px` / `vh` / `%`
+   * - 默认值：`undefined`
+   **/
   @Input({ name: "height", group: "basic", displayName: "组件高度" })
   layoutHeight!: string;
 
+  /**
+   * ### 背景色
+   * - 默认值：`"transparent"`
+   **/
   @Input({ name: "background", group: "basic", displayName: "背景色" })
   layoutBackground: string = "transparent";
 
+  /**
+   * ### 边框风格
+   * - 默认值：`["all", "solid"]`
+   **/
   @Input({
     name: "borderStyle",
     group: "basic",
@@ -41,6 +59,10 @@ export class BasicElement extends ReactComponent {
   })
   layoutBorderStyle: Array<[Position, string]> = [[Position.All, "solid"]];
 
+  /**
+   * ### 边框颜色
+   * - 默认值：`["all", "transparent"]`
+   **/
   @Input({
     name: "borderColor",
     group: "basic",
@@ -49,6 +71,11 @@ export class BasicElement extends ReactComponent {
   })
   layoutBorderColor: Array<[Position, string]> = [[Position.All, "transparent"]];
 
+  /**
+   * ### 边框尺寸
+   * - 单位：`px` / `vw` / `vh` / `%`
+   * - 默认值：`[]`
+   **/
   @Input({
     name: "borderWidth",
     group: "basic",
@@ -57,6 +84,11 @@ export class BasicElement extends ReactComponent {
   })
   layoutBorderWidth: Array<[Position, string]> = [];
 
+  /**
+   * ### 内边距
+   * - 单位：`px` / `vw` / `vh` / `%`
+   * - 默认值：`[]`
+   **/
   @Input({
     name: "padding",
     group: "basic",
@@ -65,6 +97,11 @@ export class BasicElement extends ReactComponent {
   })
   layoutPadding: Array<[Position, string]> = [];
 
+  /**
+   * ### 外边距
+   * - 单位：`px` / `vw` / `vh` / `%`
+   * - 默认值：`[]`
+   **/
   @Input({
     name: "margin",
     group: "basic",

@@ -1,7 +1,7 @@
 import React from "react";
 import { Composition, ReactComposition, useReconciler, Input } from "@amoebajs/builder";
-import { GridLayout } from "./grid-layout.component";
-import { StackLayout } from "./stack-layout.component";
+import { GridLayout } from "../layout/grid-layout.component";
+import { StackLayout } from "../layout/stack-layout.component";
 import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
 
 const Grid = useReconciler(GridLayout);
