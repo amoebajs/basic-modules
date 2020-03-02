@@ -42,7 +42,7 @@ export class DemoComposition extends ReactComposition {
         {this.useChildrenStateScope && (
           <GlobalState key="direc01">
             <GlobalState.Inputs>
-              <GlobalState.defaultStateName value="newContext" />
+              <GlobalState.defaultStateName value={this.entityId + "_context"} />
               <GlobalState.defaultStates value={childrenState}></GlobalState.defaultStates>
             </GlobalState.Inputs>
           </GlobalState>
