@@ -3,10 +3,12 @@ import { Composition, ReactComposition, useReconciler, Input, ChildrenSlot } fro
 import { GridLayout } from "../layout/grid-layout.component";
 import { StackLayout } from "../layout/stack-layout.component";
 import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
+import { GlobalStateDirective } from "../common/directives/global-state.directive";
 
 const Grid = useReconciler(GridLayout);
 const Stack = useReconciler(StackLayout);
 const Button = useReconciler(ZentButtonComponent);
+const GlobalState = useReconciler(GlobalStateDirective);
 
 @Composition({
   name: "demo-composition",
@@ -17,12 +19,34 @@ export class DemoComposition extends ReactComposition {
   @Input()
   public loadingStateName: string = "loading";
 
+  @Input()
+  public useChildrenStateScope: boolean = false;
+
+  @Input({ useMap: { key: "string", value: () => true } })
+  public childrenStates: Array<[string, any]> = [];
+
   protected async onRender() {
+    const childrenState = this.childrenStates || [];
+    let defaultLoadingName = this.loadingStateName;
+    if (defaultLoadingName.indexOf(".") > 0) {
+      defaultLoadingName = defaultLoadingName.split(".")[0];
+    }
+    if (childrenState.findIndex(([k, _]) => k === defaultLoadingName) < 0) {
+      childrenState.push([defaultLoadingName, false]);
+    }
     return (
       <Stack>
         <Stack.Inputs>
           <Stack.layoutBackground value="#8778a4" />
         </Stack.Inputs>
+        {this.useChildrenStateScope && (
+          <GlobalState key="direc01">
+            <GlobalState.Inputs>
+              <GlobalState.defaultStateName value="newContext" />
+              <GlobalState.defaultStates value={childrenState}></GlobalState.defaultStates>
+            </GlobalState.Inputs>
+          </GlobalState>
+        )}
         <Grid key="child01">
           <Grid.Inputs>
             <Grid.layoutBackground>#276ad7</Grid.layoutBackground>

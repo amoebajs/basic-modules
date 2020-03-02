@@ -149,14 +149,16 @@ page:
       input:
         loadingStateName:
           type: literal
-          expression: objectState.b
-      # children:
-      #   - ref: DemoComposition
-      #     id: Ddddddd01
-      #     input:
-      #       loadingStateName:
-      #         type: literal
-      #         expression: objectState.b
+          expression: childState03.b
+        useChildrenStateScope:
+          type: literal
+          expression: true
+        childrenStates:
+          type: literal
+          expression:
+            - [childState01, 123456]
+            - [childState02, XXXXXXXXXX]
+            - [childState03, { "a": 24523, "b": true }]
     - ref: GridLayout
       id: GridLayoutChild04
       input:
