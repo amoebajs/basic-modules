@@ -72,7 +72,7 @@ page:
           expression:
             - [demoNumber, 123456]
             - [buttonName, XXXXXXXXXX]
-            - [objectState, { "a": 24523, "b": false }]
+            - [boolState, false]
   children:
     - ref: GridLayout
       id: GridLayoutChild01
@@ -149,7 +149,7 @@ page:
       input:
         loadingStateName:
           type: literal
-          expression: childState03.b
+          expression: childState03
         useChildrenStateScope:
           type: literal
           expression: true
@@ -158,7 +158,7 @@ page:
           expression:
             - [childState01, 123456]
             - [childState02, XXXXXXXXXX]
-            - [childState03, { "a": 24523, "b": true }]
+            - [childState03, true]
     - ref: GridLayout
       id: GridLayoutChild04
       input:
@@ -172,7 +172,7 @@ page:
           props:
             loading:
               type: state
-              expression: objectState.b
+              expression: boolState
             children:
               type: state
               expression: buttonName

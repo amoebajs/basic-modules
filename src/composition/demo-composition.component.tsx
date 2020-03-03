@@ -4,11 +4,13 @@ import { GridLayout } from "../layout/grid-layout.component";
 import { StackLayout } from "../layout/stack-layout.component";
 import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
 import { GlobalStateDirective } from "../common/directives/global-state.directive";
+import { CustomClickDirective } from "../common/common.module";
 
 const Grid = useReconciler(GridLayout);
 const Stack = useReconciler(StackLayout);
 const Button = useReconciler(ZentButtonComponent);
 const GlobalState = useReconciler(GlobalStateDirective);
+const CustomClick = useReconciler(CustomClickDirective);
 
 @Composition({
   name: "demo-composition",
@@ -71,6 +73,13 @@ export class DemoComposition extends ReactComposition {
               <Grid.childRowStart>2</Grid.childRowStart>
               <Grid.childColumnStart>2</Grid.childColumnStart>
             </Grid.Attaches>
+            <CustomClick>
+              <CustomClick.Inputs>
+                <CustomClick.host value={this.childKey("zenBtn01")} />
+                <CustomClick.targetName value={this.loadingStateName} />
+                <CustomClick.expression value={`e => !($state:${this.loadingStateName})`} />
+              </CustomClick.Inputs>
+            </CustomClick>
             <Button key="zenBtn01" size="large" loading={`!${this.loadingStateName} | bind:state`}>
               <Button.Inputs>
                 <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
@@ -86,6 +95,18 @@ export class DemoComposition extends ReactComposition {
               <Grid.childRowStart>3</Grid.childRowStart>
               <Grid.childColumnStart>3</Grid.childColumnStart>
             </Grid.Attaches>
+            <CustomClick>
+              <CustomClick.Inputs>
+                <CustomClick.host value={this.childKey("zenBtn02")} />
+                <CustomClick.targetName value={this.loadingStateName} />
+                <CustomClick.expression value={`e => !($state:${this.loadingStateName})`} />
+              </CustomClick.Inputs>
+            </CustomClick>
+            <Button key="zenBtn02" size="large" loading={`${this.loadingStateName} | bind:state`}>
+              <Button.Inputs>
+                <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
+              </Button.Inputs>
+            </Button>
           </Stack>
         </Grid>
         <Grid key="child02">

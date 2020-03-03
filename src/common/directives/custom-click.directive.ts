@@ -1,6 +1,8 @@
 import ts from "typescript";
 import { Utils, Directive, ReactDirective, Input } from "@amoebajs/builder";
 
+const STATE_REGEXP = /\(\$state:([0-9a-zA-Z_]+)\)/;
+
 @Directive({ name: "custom-click", displayName: "自定义点击" })
 export class CustomClickDirective extends ReactDirective {
   @Input()
@@ -29,8 +31,13 @@ export class CustomClickDirective extends ReactDirective {
 
   private resolveExpr() {
     if (!this.targetName) return;
-    const [input, output] = this.expression.split("=>").map(i => i.trim());
+    let [input, output] = this.expression.split("=>").map(i => i.trim());
     if (input.length === 1) {
+      const result = STATE_REGEXP.exec(output);
+      if (result !== null) {
+        const [_, stateName] = result;
+        output = output.replace(STATE_REGEXP, `props.CONTEXT.state.${stateName}.value`);
+      }
       const [start, ...others] = output.split(".");
       return ts.createArrowFunction(
         [],
@@ -40,18 +47,12 @@ export class CustomClickDirective extends ReactDirective {
         undefined,
         ts.createParen(
           ts.createCall(
-            ts.createIdentifier("set" + Utils.classCase(this.targetName)),
+            ts.createIdentifier("props.CONTEXT.state." + this.targetName + ".setState"),
             [],
             [
-              ts.createCall(
-                ts.createIdentifier("String"),
-                [],
-                [
-                  others.length > 0
-                    ? ts.createPropertyAccess(ts.createIdentifier(start), others.join("."))
-                    : ts.createIdentifier(start),
-                ],
-              ),
+              others.length > 0
+                ? ts.createPropertyAccess(ts.createIdentifier(start), others.join("."))
+                : ts.createIdentifier(start),
             ],
           ),
         ),
