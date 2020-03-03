@@ -1,6 +1,6 @@
 {
   "name": "@amoebajs/basic-modules",
-  "version": "0.0.1-alpha.1583137546793",
+  "version": "0.0.1-alpha.1583221223588",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
@@ -13,7 +13,7 @@
   "private": false,
   "scripts": {
     "clear:dist": "npx rimraf dist",
-    "update:core": "yarn add @amoebajs/builder -D",
+    "update:core": "yarn add @amoebajs/builder -D --registry=https://registry.npmjs.org",
     "webpack:build": "cross-env ENV_MODE=build ts-node -r ./scripts/tspaths scripts/build.ts",
     "webpack:watch": "cross-env ENV_MODE=watch ts-node -r ./scripts/tspaths scripts/build.ts",
     "watch:src": "tsnd --respawn -r ./scripts/tspaths scripts/compile.ts",
@@ -32,7 +32,7 @@
     "@amoebajs/builder": "*"
   },
   "devDependencies": {
-    "@amoebajs/builder": "^0.0.2-alpha.1583137470541",
+    "@amoebajs/builder": "^0.0.2-alpha.1583220917589",
     "@bigmogician/publisher": "^1.0.12",
     "@types/lodash": "^4.14.149",
     "@types/webpack": "^4.41.0",

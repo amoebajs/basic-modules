@@ -1,4 +1,6 @@
-import { Component, ReactComponent, Input, Utils } from "@amoebajs/builder";
+import { Component, ReactComponent, Input, Utils, Require } from "@amoebajs/builder";
+import { ZentBaseCssDirective } from "../directives/base-css.directive";
+import { ZentComponentImportDirective } from "../directives/base-import.directive";
 
 type Decide = "||" | "??";
 
@@ -21,7 +23,11 @@ export enum ZentButtonHtmlType {
   Reset = "reset",
 }
 
+const ButtonAliasname = "ZentButton";
+
 @Component({ name: "button", displayName: "按钮" })
+@Require(ZentComponentImportDirective, { target: "button", alias: ButtonAliasname })
+@Require(ZentBaseCssDirective, { target: "button" })
 export class ZentButtonComponent extends ReactComponent {
   @Input({ name: "className", useEnums: v => typeof v === "string" })
   ztClassName: string[] = [];
@@ -55,16 +61,6 @@ export class ZentButtonComponent extends ReactComponent {
 
   protected async onInit() {
     await super.onInit();
-    const ButtonRefName = "Button";
-    const ButtonAliasname = "ZentButton";
-    this.addImports(
-      this.helper.createFrontLibImports({
-        libRoot: "es",
-        styleRoot: "css",
-        module: "zent",
-        imports: [[ButtonRefName, ButtonAliasname]],
-      }),
-    );
     this.setTagName(ButtonAliasname);
     const styles = this.useArrayMap(this.ztStyle);
     this.addAttributesWithSyntaxMap({
