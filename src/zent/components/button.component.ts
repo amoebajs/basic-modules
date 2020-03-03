@@ -26,7 +26,7 @@ export enum ZentButtonHtmlType {
 const ButtonAliasname = "ZentButton";
 
 @Component({ name: "button", displayName: "按钮" })
-@Require(ZentComponentImportDirective, { target: "button", alias: ButtonAliasname })
+@Require(ZentComponentImportDirective, { target: "button", alias: ({ entityId }: any) => entityId + "_Import" })
 @Require(ZentBaseCssDirective, { target: "button" })
 export class ZentButtonComponent extends ReactComponent {
   @Input({ name: "className", useEnums: v => typeof v === "string" })
@@ -61,7 +61,7 @@ export class ZentButtonComponent extends ReactComponent {
 
   protected async onInit() {
     await super.onInit();
-    this.setTagName(ButtonAliasname);
+    this.setTagName(this.entityId + "_Import");
     const styles = this.useArrayMap(this.ztStyle);
     this.addAttributesWithSyntaxMap({
       // 覆盖zent按钮的组合样式

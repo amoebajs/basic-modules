@@ -1,6 +1,6 @@
 {
   "name": "@amoebajs/basic-modules",
-  "version": "0.0.1-alpha.1583221223588",
+  "version": "0.0.1-alpha.1583223007155",
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
@@ -32,7 +32,7 @@
     "@amoebajs/builder": "*"
   },
   "devDependencies": {
-    "@amoebajs/builder": "^0.0.2-alpha.1583220917589",
+    "@amoebajs/builder": "^0.0.2-alpha.1583222845417",
     "@bigmogician/publisher": "^1.0.12",
     "@types/lodash": "^4.14.149",
     "@types/webpack": "^4.41.0",
