@@ -123,6 +123,7 @@ export class BasicElement extends ReactComponent {
   protected getElementSelfStyle(): Record<string, string | number> {
     return {
       display: "block",
+      boxSizing: "border-box",
       height: this.layoutHeight,
       width: this.layoutWidth,
       background: this.layoutBackground,

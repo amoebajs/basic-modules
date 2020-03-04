@@ -8,6 +8,9 @@ export class ZentBaseCssDirective extends ReactDirective {
   protected async onAttach() {
     try {
       this.addImports([this.createNode("import").setModulePath(`zent/css/${this.target}.css`)]);
+      if (this.target !== "base") {
+        this.addImports([this.createNode("import").setModulePath(`zent/css/base.css`)]);
+      }
     } catch (error) {
       /** ignore */
     }

@@ -10,9 +10,16 @@ export class ZentComponentImportDirective extends ReactDirective {
 
   protected async onAttach() {
     try {
-      this.addImports([
-        this.helper.createImport("zent/es/" + Utils.kebabCase(this.target), this.alias || Utils.classCase(this.target)),
-      ]);
+      let pathname = this.target || "";
+      let compname = this.alias || this.target || "";
+      const lidx = pathname.lastIndexOf("/");
+      if (lidx > 0) {
+        const value = pathname.slice(lidx);
+        const entiname = Utils.classCase(value);
+        pathname = pathname.slice(0, lidx) + "/" + entiname;
+        compname = this.alias || entiname;
+      }
+      this.addImports([this.helper.createImport("zent/es/" + pathname, compname)]);
     } catch (error) {
       /** ignore */
     }
