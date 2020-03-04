@@ -1,7 +1,5 @@
 import ts from "typescript";
-import { Utils, Directive, ReactDirective, Input } from "@amoebajs/builder";
-
-const STATE_REGEXP = /\$\(([0-9a-zA-Z_]+)\s+\|\s+bind:state\)/;
+import { Directive, ReactDirective, Input, BasicState, IComplexLogicDefine } from "@amoebajs/builder";
 
 @Directive({ name: "custom-click", displayName: "自定义点击" })
 export class CustomClickDirective extends ReactDirective {
@@ -17,47 +15,26 @@ export class CustomClickDirective extends ReactDirective {
   @Input()
   public targetName!: string;
 
-  @Input()
-  public expression: string = "e => e";
+  @Input({ useExpression: true })
+  public expression: IComplexLogicDefine = { expressions: [] };
 
   protected async onAttach() {
     try {
-      this.render.appendJsxAttribute(this.host!, this.attrName!, ts.createJsxExpression(undefined, this.resolveExpr()));
+      this.render.appendJsxAttribute(
+        this.host!,
+        this.attrName!,
+        this.helper.createJsxArrowEventHandler(
+          ts.createIdentifier(
+            this.helper.useComplexLogicExpression(
+              { type: "complexLogic", expression: this.expression },
+              this.render.getRootState(BasicState.ContextInfo).name,
+            ),
+          ),
+        ),
+      );
     } catch (error) {
       // console.log(error);
       /** ignore */
     }
-  }
-
-  private resolveExpr() {
-    if (!this.targetName) return;
-    let [input, output] = this.expression.split("=>").map(i => i.trim());
-    if (input.length === 1) {
-      const result = STATE_REGEXP.exec(output);
-      if (result !== null) {
-        const [_, stateName] = result;
-        output = output.replace(STATE_REGEXP, `props.CONTEXT.state.${stateName}.value`);
-      }
-      const [start, ...others] = output.split(".");
-      return ts.createArrowFunction(
-        [],
-        [],
-        [ts.createParameter([], [], undefined, ts.createIdentifier(input), undefined, Utils.TYPES.Any, undefined)],
-        undefined,
-        undefined,
-        ts.createParen(
-          ts.createCall(
-            ts.createIdentifier("props.CONTEXT.state." + this.targetName + ".setState"),
-            [],
-            [
-              others.length > 0
-                ? ts.createPropertyAccess(ts.createIdentifier(start), others.join("."))
-                : ts.createIdentifier(start),
-            ],
-          ),
-        ),
-      );
-    }
-    return undefined;
   }
 }

@@ -36,6 +36,14 @@ export class DemoComposition extends ReactComposition {
     if (childrenState.findIndex(([k, _]) => k === defaultLoadingName) < 0) {
       childrenState.push([defaultLoadingName, false]);
     }
+    const eventHandler = {
+      vars: [
+        "e is args[0]",
+        `preState is $(${this.loadingStateName} | bind:state)`,
+        `updateState is $(${this.loadingStateName} | bind:setState)`,
+      ],
+      expressions: ["return updateState(!preState)"],
+    };
     return (
       <Stack>
         <Stack.Inputs>
@@ -77,7 +85,7 @@ export class DemoComposition extends ReactComposition {
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn01")} />
                 <CustomClick.targetName value={this.loadingStateName} />
-                <CustomClick.expression value={`e => !$(${this.loadingStateName} | bind:state)`} />
+                <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
             <Button key="zenBtn01" size="large" loading={`!${this.loadingStateName} | bind:state`}>
@@ -99,7 +107,7 @@ export class DemoComposition extends ReactComposition {
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn02")} />
                 <CustomClick.targetName value={this.loadingStateName} />
-                <CustomClick.expression value={`e => !$(${this.loadingStateName} | bind:state)`} />
+                <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
             <Button key="zenBtn02" size="large" loading={`${this.loadingStateName} | bind:state`}>
