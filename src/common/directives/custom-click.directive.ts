@@ -1,7 +1,7 @@
 import ts from "typescript";
 import { Utils, Directive, ReactDirective, Input } from "@amoebajs/builder";
 
-const STATE_REGEXP = /\(\$state:([0-9a-zA-Z_]+)\)/;
+const STATE_REGEXP = /\$\(([0-9a-zA-Z_]+)\s+\|\s+bind:state\)/;
 
 @Directive({ name: "custom-click", displayName: "自定义点击" })
 export class CustomClickDirective extends ReactDirective {

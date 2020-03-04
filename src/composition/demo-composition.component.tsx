@@ -77,7 +77,7 @@ export class DemoComposition extends ReactComposition {
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn01")} />
                 <CustomClick.targetName value={this.loadingStateName} />
-                <CustomClick.expression value={`e => !($state:${this.loadingStateName})`} />
+                <CustomClick.expression value={`e => !$(${this.loadingStateName} | bind:state)`} />
               </CustomClick.Inputs>
             </CustomClick>
             <Button key="zenBtn01" size="large" loading={`!${this.loadingStateName} | bind:state`}>
@@ -99,7 +99,7 @@ export class DemoComposition extends ReactComposition {
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn02")} />
                 <CustomClick.targetName value={this.loadingStateName} />
-                <CustomClick.expression value={`e => !($state:${this.loadingStateName})`} />
+                <CustomClick.expression value={`e => !$(${this.loadingStateName} | bind:state)`} />
               </CustomClick.Inputs>
             </CustomClick>
             <Button key="zenBtn02" size="large" loading={`${this.loadingStateName} | bind:state`}>
