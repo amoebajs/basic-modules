@@ -1,5 +1,6 @@
 import ts from "typescript";
 import { Utils, Directive, ReactDirective, Input, BasicState, VariableGenerator } from "@amoebajs/builder";
+
 @Directive({
   name: "global-state",
   displayName: "全局状态",
@@ -25,7 +26,7 @@ export class GlobalStateDirective extends ReactDirective {
   }
 
   private createContextBody() {
-    return ts.createObjectLiteral([ts.createPropertyAssignment("state", this.createState())]);
+    return ts.createObjectLiteral([ts.createPropertyAssignment(Utils.REACT.State, this.createState())]);
   }
 
   private createStates() {

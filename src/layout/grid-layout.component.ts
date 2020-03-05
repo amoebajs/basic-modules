@@ -1,4 +1,4 @@
-import { Attach, Component, Input, JsxElementGenerator, PropAttach, Group } from "@amoebajs/builder";
+import { Attach, Component, Input, PropAttach, Group } from "@amoebajs/builder";
 import { BasicLayout } from "./basic-layout.component";
 
 const isDoubleBigThanOne = (v: any) => {
@@ -113,7 +113,8 @@ export class GridLayout extends BasicLayout {
     };
   }
 
-  protected onChildrenVisit(key: string, generator: JsxElementGenerator) {
+  protected onChildrenVisit(key: string, generator: import("@amoebajs/builder").JsxElementGenerator) {
+    const result = super.onChildrenVisit(key, generator);
     const styles: Record<string, string> = {};
     const cStart = this.childColumnStart.get(key)!;
     const cSpan = this.childColumnSpan.get(key)!;
@@ -138,6 +139,7 @@ export class GridLayout extends BasicLayout {
     } else {
       // 不存在或者不支持处理其他的情况
     }
+    return result;
   }
 
   private calcRowsSize() {

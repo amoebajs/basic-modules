@@ -13,7 +13,7 @@ import { ZentComponentImportDirective } from "../directives/base-import.directiv
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { GlobalStateDirective } from "../../common/directives/global-state.directive";
 
-@Component({ name: "loading", displayName: "加载" })
+@Component({ name: "loading", displayName: "全局Loading" })
 @Require(ZentBaseCssDirective, { target: "loading" })
 @Require(ZentComponentImportDirective, {
   target: "loading/block-loading",
@@ -55,7 +55,7 @@ export class ZentLoadingComponent extends ReactComponent implements IAfterInit, 
       return;
     }
     const exp = `$(${displayWith} | bind:state)`;
-    const condition = this.helper["useBindExpression"](exp, this.getState(BasicState.ContextInfo).name);
+    const condition = this.helper.useBindExpression(exp, this.getState(BasicState.ContextInfo).name);
     return { newDisplayRule: condition };
   }
 }
