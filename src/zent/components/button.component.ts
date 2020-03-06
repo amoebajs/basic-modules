@@ -1,4 +1,4 @@
-import { Component, Input, Require } from "@amoebajs/builder";
+import { Component, Input, Require, Reference, VariableRef } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentComponent } from "../base/base.component";
@@ -25,7 +25,7 @@ export enum ZentButtonHtmlType {
 const ButtonAliasname = "ZentButton";
 
 @Component({ name: "button", displayName: "按钮" })
-@Require(ZentComponentImportDirective, { target: "button", alias: ({ uniqueToken }: any) => uniqueToken })
+@Require(ZentComponentImportDirective, { target: "button", alias: ({ comp }: any) => comp.name })
 @Require(ZentBaseCssDirective, { target: "button" })
 export class ZentButtonComponent extends ZentComponent {
   @Input({ name: "className", useEnums: v => typeof v === "string" })
@@ -58,9 +58,12 @@ export class ZentButtonComponent extends ZentComponent {
   @Input({ name: "htmltype" })
   ztHtmlType: ZentButtonHtmlType = ZentButtonHtmlType.Button;
 
+  @Reference("button")
+  protected comp!: VariableRef;
+
   protected async onInit() {
     await super.onInit();
-    this.setTagName(this.uniqueToken);
+    this.setTagName(this.comp.name);
     const styles = this.useArrayMap(this.ztStyle);
     this.addAttributesWithSyntaxMap({
       // 覆盖zent按钮的组合样式

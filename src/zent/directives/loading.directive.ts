@@ -1,4 +1,4 @@
-import { Directive, Input } from "@amoebajs/builder";
+import { Directive, Input, Reference, VariableRef } from "@amoebajs/builder";
 import { ZentDirective } from "../base/base.directive";
 
 @Directive({
@@ -10,16 +10,19 @@ export class ZentLoadingDirective extends ZentDirective {
   @Input({ name: "name" })
   public stateName: string = "loading";
 
+  @Reference("block-loading")
+  protected comp!: VariableRef;
+
   protected async onAttach() {
     await super.onAttach();
     this.addImports([
-      this.helper.createImport("zent/es/loading/BlockLoading", this.uniqueToken),
+      this.helper.createImport("zent/es/loading/BlockLoading", this.comp.name),
       this.helper.createImport("zent/css/loading.css"),
     ]);
     const loadingBind = this.render.createStateAccessSyntax(this.stateName);
     this.render.appendRootEleChangeFns(pageRoot =>
       this.createNode("jsx-element")
-        .setTagName(this.uniqueToken)
+        .setTagName(this.comp.name)
         .addJsxAttr("loading", loadingBind)
         .addJsxChildren([pageRoot]),
     );
