@@ -1,4 +1,4 @@
-import { Component, Input, Utils, Require } from "@amoebajs/builder";
+import { Component, Input, Require } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentComponent } from "../base/base.component";
