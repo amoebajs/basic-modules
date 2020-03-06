@@ -1,6 +1,5 @@
 import {
   Component,
-  ReactComponent,
   Require,
   IAfterInit,
   Input,
@@ -12,6 +11,7 @@ import {
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { GlobalStateDirective } from "../../common/directives/global-state.directive";
+import { ZentComponent } from "../base/base.component";
 
 @Component({ name: "loading", displayName: "全局Loading" })
 @Require(ZentBaseCssDirective, { target: "loading" })
@@ -23,19 +23,15 @@ import { GlobalStateDirective } from "../../common/directives/global-state.direc
   name: "AppContext",
   state: ({ stateName }: any) => [[stateName, false]],
 })
-export class ZentLoadingComponent extends ReactComponent implements IAfterInit, IAfterChildrenRender {
+export class ZentLoadingComponent extends ZentComponent implements IAfterInit, IAfterChildrenRender {
   @Input({ name: "loading" })
   public stateName: string = "loading";
 
   @Attach({ name: "display" })
   public displayWith: PropAttach<string> = new PropAttach("");
 
-  protected get importToken() {
-    return this.entityId + "_Import";
-  }
-
   public afterInit() {
-    this.setTagName(this.importToken);
+    this.setTagName(this.uniqueToken);
   }
 
   public afterChildrenRender() {

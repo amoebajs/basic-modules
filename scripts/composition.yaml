@@ -19,11 +19,6 @@ directives:
     name: global-state
     module: ambjs-common-module
     version: "0.0.1-beta.0"
-# compositions:
-#   - id: LoadingGrid
-#     name: loading-grid
-#     module: ambjs-composition-module
-#     version: 0.0.1-beta.0
 page:
   ref: GridLayout
   id: App
@@ -46,5 +41,15 @@ page:
           type: literal
           expression: fetching
   children:
-    - ref: ZentButton
-      id: InnerButton01
+    - ref: GridLayout
+      id: AppInnerSection01
+      # directives:
+      #   - ref: ZentLoading
+      #     id: LoadingDire02
+      #     input:
+      #       name:
+      #         type: literal
+      #         expression: fetching
+      children:
+        - ref: ZentButton
+          id: InnerButton01

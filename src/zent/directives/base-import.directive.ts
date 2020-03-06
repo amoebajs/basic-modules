@@ -1,7 +1,12 @@
-import { Directive, Input, ReactDirective, Utils } from "@amoebajs/builder";
+import { Directive, Input, Utils } from "@amoebajs/builder";
+import { ZentDirective } from "../base/base.directive";
 
-@Directive({ name: "component-import", displayName: "组件导入指令" })
-export class ZentComponentImportDirective extends ReactDirective {
+@Directive({
+  name: "component-import",
+  displayName: "组件导入指令",
+  parent: ZentDirective,
+})
+export class ZentComponentImportDirective extends ZentDirective {
   @Input()
   public target: string = "button";
 

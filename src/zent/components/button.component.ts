@@ -1,8 +1,7 @@
-import { Component, ReactComponent, Input, Utils, Require } from "@amoebajs/builder";
+import { Component, Input, Utils, Require } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
-
-type Decide = "||" | "??";
+import { ZentComponent } from "../base/base.component";
 
 export enum ZentButtonType {
   Default = "default",
@@ -26,9 +25,9 @@ export enum ZentButtonHtmlType {
 const ButtonAliasname = "ZentButton";
 
 @Component({ name: "button", displayName: "按钮" })
-@Require(ZentComponentImportDirective, { target: "button", alias: ({ entityId }: any) => entityId + "_Import" })
+@Require(ZentComponentImportDirective, { target: "button", alias: ({ uniqueToken }: any) => uniqueToken })
 @Require(ZentBaseCssDirective, { target: "button" })
-export class ZentButtonComponent extends ReactComponent {
+export class ZentButtonComponent extends ZentComponent {
   @Input({ name: "className", useEnums: v => typeof v === "string" })
   ztClassName: string[] = [];
 
@@ -61,7 +60,7 @@ export class ZentButtonComponent extends ReactComponent {
 
   protected async onInit() {
     await super.onInit();
-    this.setTagName(this.entityId + "_Import");
+    this.setTagName(this.uniqueToken);
     const styles = this.useArrayMap(this.ztStyle);
     this.addAttributesWithSyntaxMap({
       // 覆盖zent按钮的组合样式
@@ -81,28 +80,5 @@ export class ZentButtonComponent extends ReactComponent {
       onClick: "props.onClick",
     });
     this.addRenderPushedChild(this.createNode("jsx-expression").setExpression("props.children"));
-  }
-
-  private useStringProp(prop: string, input: string[] | string | boolean, decide: Decide = "||"): string {
-    let value = "";
-    if (Utils.is.array(input)) value = input.join(" ");
-    else value = String(input);
-    return this.useDefaultProp(prop, `"${value}"`, decide);
-  }
-
-  private useBooleanProp(prop: string, value: boolean | string, decide: Decide = "||"): string {
-    return this.useDefaultProp(prop, String(value) === "true", decide);
-  }
-
-  private useDefaultProp(prop: string, defaultValue: any, decide: Decide = "||"): string {
-    return `props.${prop} ${decide} ${defaultValue}`;
-  }
-
-  private useObjectProp(prop: string, value: Record<string, any>) {
-    return `{ ...(${JSON.stringify(value)}), ...props.${prop} }`;
-  }
-
-  private useArrayMap(values: Array<[string, any]>): Record<string, any> {
-    return values.reduce((p, c) => ({ ...p, [c[0]]: c[1] }), {});
   }
 }
