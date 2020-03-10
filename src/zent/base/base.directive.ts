@@ -1,4 +1,4 @@
-import { ReactDirective, Directive } from "@amoebajs/builder";
+import { ReactDirective, Directive, IBasicReactContainerState as IT } from "@amoebajs/builder";
 
 @Directive({ name: "directive-base", displayName: "Zent基础指令" })
-export class ZentDirective extends ReactDirective {}
+export class ZentDirective<T extends Record<string, any> = {}> extends ReactDirective<T & IT<{}>> {}

@@ -18,28 +18,34 @@ export class ZentComponentImportDirective extends ZentDirective {
 
   protected async onAttach() {
     try {
+      this.createNameAliasImport(this.target, this.alias || this.target);
       if (!this.named) {
-        this.named = { [this.target]: this.alias };
+        return;
       }
       const entries = Object.entries(this.named);
-      for (const [target, alias] of entries) {
-        this.createNameAliasImport(target, alias);
+      for (const [alias, target] of entries) {
+        this.createNameAliasImport(target, alias, "named");
       }
     } catch (error) {
       /** ignore */
     }
   }
 
-  private createNameAliasImport(target: string, alias?: string) {
+  private createNameAliasImport(target: string, alias: string, type: "default" | "named" = "default") {
     let pathname = target || "";
-    let compname = alias || target || "";
+    let compname = alias || "";
+    const useAlias = alias !== target;
     const lidx = pathname.lastIndexOf("/");
     if (lidx > 0) {
       const value = pathname.slice(lidx);
       const entiname = Utils.classCase(value);
       pathname = pathname.slice(0, lidx) + "/" + entiname;
-      compname = alias || entiname;
+      compname = useAlias ? alias : entiname;
     }
-    this.addImports([this.helper.createImport("zent/es/" + pathname, compname)]);
+    if (type === "default") {
+      this.addImports([this.helper.createImport("zent/es/" + pathname, compname)]);
+    } else {
+      this.addImports([this.helper.createImport("zent/es/" + pathname, undefined, [compname])]);
+    }
   }
 }

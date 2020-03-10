@@ -1,11 +1,11 @@
-import { Component, ReactComponent, Require, Utils } from "@amoebajs/builder";
+import { Component, ReactComponent, Require, Utils, IBasicReactContainerState as IT } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 
 export type IDecide = "||" | "??";
 
 @Component({ name: "component-base", displayName: "Zent基础组件" })
 @Require(ZentBaseCssDirective, { target: "base" })
-export class ZentComponent extends ReactComponent {
+export class ZentComponent<T extends Record<string, any> = {}> extends ReactComponent<T & IT<{}>> {
   protected useStringProp(prop: string, input: string[] | string | boolean, decide: IDecide = "||"): string {
     let value = "";
     if (Utils.is.array(input)) value = input.join(" ");
