@@ -6,10 +6,6 @@ export type IDecide = "||" | "??";
 @Component({ name: "component-base", displayName: "Zent基础组件" })
 @Require(ZentBaseCssDirective, { target: "base" })
 export class ZentComponent extends ReactComponent {
-  protected get uniqueToken() {
-    return "ZentComponent_" + this.entityId;
-  }
-
   protected useStringProp(prop: string, input: string[] | string | boolean, decide: IDecide = "||"): string {
     let value = "";
     if (Utils.is.array(input)) value = input.join(" ");

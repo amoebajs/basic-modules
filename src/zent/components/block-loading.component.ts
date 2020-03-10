@@ -1,4 +1,4 @@
-import { Component, Require, Input, Attach, PropAttach, IAfterInit } from "@amoebajs/builder";
+import { Component, Require, Input, Attach, PropAttach, IAfterInit, Reference, VariableRef } from "@amoebajs/builder";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { GlobalStateDirective } from "../../common/directives/global-state.directive";
@@ -8,7 +8,7 @@ import { ZentComponent } from "../base/base.component";
 @Require(ZentBaseCssDirective, { target: "loading" })
 @Require(ZentComponentImportDirective, {
   target: "loading/block-loading",
-  alias: ({ uniqueToken }: ZentLoadingComponent) => uniqueToken,
+  alias: ({ formElement }: ZentLoadingComponent) => formElement.name,
 })
 @Require(GlobalStateDirective, {
   name: "AppContext",
@@ -21,8 +21,11 @@ export class ZentLoadingComponent extends ZentComponent implements IAfterInit {
   @Attach({ name: "display" })
   public displayWith: PropAttach<string> = new PropAttach();
 
+  @Reference("block-loading")
+  protected formElement!: VariableRef;
+
   public afterInit() {
-    this.setTagName(this.uniqueToken);
+    this.setTagName(this.formElement.name);
   }
 
   public afterChildrenRender() {

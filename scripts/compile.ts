@@ -10,7 +10,11 @@ const openfile = process.argv.find(i => i.startsWith("--open=")) || "--open=layo
 const format = process.argv.find(i => i.startsWith("--format=")) || "--format=false";
 const filemode = process.argv.find(i => i.startsWith("--mode=")) || "--mode=ts";
 
-const demoConf = jsyaml.load(fs.readFileSync(path.resolve(__dirname, openfile.slice(7))).toString());
+const demoConf = jsyaml.load(
+  fs
+    .readFileSync(path.resolve(__dirname, (openfile.endsWith(".yaml") ? openfile : openfile + ".yaml").slice(7)))
+    .toString(),
+);
 
 const buildFolder = path.resolve(process.cwd(), "build");
 

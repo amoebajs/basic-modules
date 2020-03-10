@@ -22,8 +22,6 @@ export enum ZentButtonHtmlType {
   Reset = "reset",
 }
 
-const ButtonAliasname = "ZentButton";
-
 @Component({ name: "button", displayName: "按钮" })
 @Require(ZentComponentImportDirective, { target: "button", alias: ({ comp }: any) => comp.name })
 @Require(ZentBaseCssDirective, { target: "button" })
