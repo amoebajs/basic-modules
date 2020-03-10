@@ -1,0 +1,35 @@
+provider: react
+framework:
+  sdk: "0.0.1"
+components:
+  - id: GridLayout
+    name: grid-layout
+    module: ambjs-layout-module
+    version: 0.0.1-beta.0
+  - id: ZentForm
+    name: universal-form
+    module: zent-module
+    version: 0.0.1-beta.0
+# directives:
+#   - id: GlobalState
+#     name: global-state
+#     module: ambjs-common-module
+#     version: "0.0.1-beta.0"
+page:
+  ref: GridLayout
+  id: App
+  slot: app
+  #   directives:
+  #     - ref: GlobalState
+  #       id: GlobalStateInstance
+  #       input:
+  #         name:
+  #           type: literal
+  #           expression: AppContext
+  #         state:
+  #           type: literal
+  #           expression:
+  #             - [fetching, false]
+  children:
+    - ref: ZentForm
+      id: AppInnerSection01

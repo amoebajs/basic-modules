@@ -4,7 +4,7 @@ import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { GlobalStateDirective } from "../../common/directives/global-state.directive";
 import { ZentComponent } from "../base/base.component";
 
-@Component({ name: "loading", displayName: "全局Loading" })
+@Component({ name: "loading", displayName: "全局Loading", parent: ZentComponent })
 @Require(ZentBaseCssDirective, { target: "loading" })
 @Require(ZentComponentImportDirective, {
   target: "loading/block-loading",

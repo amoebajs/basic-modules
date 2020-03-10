@@ -8,7 +8,7 @@ import { ZentDirective } from "../base/base.directive";
 })
 export class ZentComponentImportDirective extends ZentDirective {
   @Input()
-  public target: string = "button";
+  public target!: string;
 
   @Input()
   public alias!: string;
@@ -18,20 +18,20 @@ export class ZentComponentImportDirective extends ZentDirective {
 
   protected async onAttach() {
     try {
-      this.createNameAliasImport(this.target, this.alias || this.target);
-      if (!this.named) {
-        return;
-      }
-      const entries = Object.entries(this.named);
-      for (const [alias, target] of entries) {
-        this.createNameAliasImport(target, alias, "named");
+      if (this.named) {
+        const entries = Object.entries(this.named);
+        for (const [target, alias] of entries) {
+          this.createNamedImport(this.target, target, alias);
+        }
+      } else {
+        this.createDefaultImport(this.target, this.alias || this.target);
       }
     } catch (error) {
       /** ignore */
     }
   }
 
-  private createNameAliasImport(target: string, alias: string, type: "default" | "named" = "default") {
+  private createDefaultImport(target: string, alias: string) {
     let pathname = target || "";
     let compname = alias || "";
     const useAlias = alias !== target;
@@ -42,10 +42,17 @@ export class ZentComponentImportDirective extends ZentDirective {
       pathname = pathname.slice(0, lidx) + "/" + entiname;
       compname = useAlias ? alias : entiname;
     }
-    if (type === "default") {
-      this.addImports([this.helper.createImport("zent/es/" + pathname, compname)]);
-    } else {
-      this.addImports([this.helper.createImport("zent/es/" + pathname, undefined, [compname])]);
+    this.addImports([this.helper.createImport("zent/es/" + pathname, compname)]);
+  }
+
+  private createNamedImport(target: string, name: string, alias?: string) {
+    let pathname = target || "";
+    const lidx = pathname.lastIndexOf("/");
+    if (lidx > 0) {
+      const value = pathname.slice(lidx);
+      const entiname = Utils.classCase(value);
+      pathname = pathname.slice(0, lidx) + "/" + entiname;
     }
+    this.addImports([this.helper.createImport("zent/es/" + pathname, undefined, [!alias ? name : [name, alias]])]);
   }
 }

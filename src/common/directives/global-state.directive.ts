@@ -13,12 +13,16 @@ export class GlobalStateDirective extends ReactDirective {
   @Input({ name: "name" })
   defaultStateName: string = "__CONTEXT__";
 
-  protected async onAttach() {
-    await super.onAttach();
-    this.createStates();
+  protected async onInit() {
+    await super.onInit();
     this.render.setRootState(BasicState.ContextInfo, {
       name: this.defaultStateName,
     });
+  }
+
+  protected async onAttach() {
+    await super.onAttach();
+    this.createStates();
     // 延迟创建上下文对象，可以更好的收集变量
     this.render.appendRootFnBeforeRender(() => {
       this.render.appendRootVariable(this.defaultStateName, this.createContextBody());

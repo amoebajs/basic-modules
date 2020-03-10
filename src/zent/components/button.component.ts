@@ -22,7 +22,7 @@ export enum ZentButtonHtmlType {
   Reset = "reset",
 }
 
-@Component({ name: "button", displayName: "按钮" })
+@Component({ name: "button", displayName: "按钮", parent: ZentComponent })
 @Require(ZentComponentImportDirective, { target: "button", alias: ({ comp }: any) => comp.name })
 @Require(ZentBaseCssDirective, { target: "button" })
 export class ZentButtonComponent extends ZentComponent {
