@@ -19,11 +19,10 @@ export class ZentLoadingDirective extends ZentDirective {
       this.helper.createImport("zent/es/loading/BlockLoading", this.comp.name),
       this.helper.createImport("zent/css/loading.css"),
     ]);
-    const loadingBind = this.render.createStateAccessSyntax(this.stateName);
     this.render.appendRootEleChangeFns(pageRoot =>
       this.createNode("jsx-element")
         .setTagName(this.comp.name)
-        .addJsxAttr("loading", loadingBind)
+        .addJsxAttr("loading", this.render.createStateAccessSyntax(this.stateName))
         .addJsxChildren([pageRoot]),
     );
   }

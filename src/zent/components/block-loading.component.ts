@@ -1,13 +1,4 @@
-import {
-  Component,
-  Require,
-  IAfterInit,
-  Input,
-  Attach,
-  PropAttach,
-  BasicState,
-  IAfterChildrenRender,
-} from "@amoebajs/builder";
+import { Component, Require, Input, Attach, PropAttach, IAfterInit } from "@amoebajs/builder";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { GlobalStateDirective } from "../../common/directives/global-state.directive";
@@ -17,18 +8,18 @@ import { ZentComponent } from "../base/base.component";
 @Require(ZentBaseCssDirective, { target: "loading" })
 @Require(ZentComponentImportDirective, {
   target: "loading/block-loading",
-  alias: ({ importToken }: any) => importToken,
+  alias: ({ uniqueToken }: ZentLoadingComponent) => uniqueToken,
 })
 @Require(GlobalStateDirective, {
   name: "AppContext",
-  state: ({ stateName }: any) => [[stateName, false]],
+  state: ({ stateName }: ZentLoadingComponent) => [[stateName, false]],
 })
-export class ZentLoadingComponent extends ZentComponent implements IAfterInit, IAfterChildrenRender {
+export class ZentLoadingComponent extends ZentComponent implements IAfterInit {
   @Input({ name: "loading" })
   public stateName: string = "loading";
 
   @Attach({ name: "display" })
-  public displayWith: PropAttach<string> = new PropAttach("");
+  public displayWith: PropAttach<string> = new PropAttach();
 
   public afterInit() {
     this.setTagName(this.uniqueToken);
@@ -36,13 +27,7 @@ export class ZentLoadingComponent extends ZentComponent implements IAfterInit, I
 
   public afterChildrenRender() {
     super.afterChildrenRender();
-    this.addAttributeWithSyntaxText(
-      "loading",
-      this.helper.useStateExpression(
-        { type: "state", expression: this.stateName, extensions: { reverse: false } },
-        this.getState(BasicState.ContextInfo).name,
-      ),
-    );
+    this.addAttributeWithSyntaxText("loading", this.render.createStateAccessSyntax(this.stateName));
   }
 
   protected onChildrenVisit(key: string) {
@@ -50,8 +35,8 @@ export class ZentLoadingComponent extends ZentComponent implements IAfterInit, I
     if (!displayWith || displayWith === "") {
       return;
     }
-    const exp = `$(${displayWith} | bind:state)`;
-    const condition = this.helper.useBindExpression(exp, this.getState(BasicState.ContextInfo).name);
-    return { newDisplayRule: condition };
+    return {
+      newDisplayRule: this.render.createStateAccessSyntax(displayWith),
+    };
   }
 }
