@@ -32,7 +32,7 @@
     "@amoebajs/builder": "*"
   },
   "devDependencies": {
-    "@amoebajs/builder": "^0.0.2-alpha.1583489738106",
+    "@amoebajs/builder": "^0.0.2-alpha.1583822621466",
     "@bigmogician/publisher": "^1.0.12",
     "@types/lodash": "^4.14.149",
     "@types/webpack": "^4.41.0",
