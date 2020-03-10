@@ -1,6 +1,6 @@
 import React from "react";
 import { Composition, ReactComposition, useReconciler, ChildrenSlot } from "@amoebajs/builder";
-import { ZentLoadingComponent } from "../zent/components/block-loading.component";
+import { ZentLoadingComponent } from "../zent/loading/block-loading.component";
 import { GridLayout } from "../layout/grid-layout.component";
 
 const Grid = useReconciler(GridLayout);
