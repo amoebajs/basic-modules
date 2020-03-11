@@ -1,16 +1,8 @@
-import {
-  Component,
-  Require,
-  Reference,
-  VariableRef,
-  IAfterInit,
-  IAfterDirectivesAttach,
-  Utils,
-} from "@amoebajs/builder";
+import { Component, Require, Reference, VariableRef, IAfterInit, IAfterDirectivesAttach } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
-import { IUniversalFormField, FormFieldType } from "./form-field.directive";
+import { IUniversalFormField } from "./form-field.directive";
 
 export interface IUniversalFormState {
   formRefname: string;
