@@ -1,15 +1,19 @@
-import { Component, Require, Input, Attach, Reference, PropAttach, VariableRef, IAfterInit } from "@amoebajs/builder";
+import {
+  Component,
+  Require,
+  Reference,
+  VariableRef,
+  IAfterInit,
+  IAfterDirectivesAttach,
+  Utils,
+} from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
-
-export interface IUniversalFormField {
-  name: string;
-  label: string;
-  placeholder: string;
-}
+import { IUniversalFormField, FormFieldType } from "./form-field.directive";
 
 export interface IUniversalFormState {
+  formRefname: string;
   formFields: Record<string, IUniversalFormField>;
 }
 
@@ -26,8 +30,8 @@ export interface IUniversalFormState {
     FormStrategy: formStrategy.name,
   }),
 })
-export class UniversalForm extends ZentComponent<IUniversalFormState> implements IAfterInit {
-  @Reference("form-root")
+export class UniversalForm extends ZentComponent<IUniversalFormState> implements IAfterInit, IAfterDirectivesAttach {
+  @Reference("form")
   protected formRoot!: VariableRef;
 
   @Reference("form-strategy")
@@ -37,19 +41,25 @@ export class UniversalForm extends ZentComponent<IUniversalFormState> implements
   protected formRefname!: VariableRef;
 
   public afterInit() {
-    const strategy = `${this.formRoot.name}.useForm<any, any, any>(${this.formStrategy.name}.View)`;
     this.setTagName(this.formRoot.name);
-    this.addUnshiftVariable(this.formRefname.name, this.helper.__engine.createIdentifier(strategy));
+    this.setState("formFields", {});
+    this.setState("formRefname", this.formRefname.name);
     this.addAttributeWithSyntaxText("form", this.formRefname.name);
+    this.addAttributeWithSyntaxText("layout", `"${"horizontal"}"`);
+    this.addUnshiftVariable(this.formRefname.name, this.createRefExpression());
   }
 
-  // protected onChildrenVisit(key: string) {
-  //   const displayWith = this.displayWith.get(key);
-  //   if (!displayWith || displayWith === "") {
-  //     return;
-  //   }
-  //   return {
-  //     newDisplayRule: this.render.createStateAccessSyntax(displayWith),
-  //   };
-  // }
+  private createRefExpression() {
+    const strategy = `${this.formRoot.name}.useForm<any, any, any>(${this.formStrategy.name}.View)`;
+    return this.helper.__engine.createIdentifier(strategy);
+  }
+
+  public afterDirectivesAttach() {
+    super.afterDirectivesAttach();
+    const set = this.render.getRootState("formFields");
+    const entries = Object.entries(set);
+    for (const [key, entry] of entries) {
+      this.addRenderChildren(key, <any>entry.element);
+    }
+  }
 }

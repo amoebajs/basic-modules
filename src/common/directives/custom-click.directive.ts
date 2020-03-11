@@ -3,17 +3,11 @@ import { Directive, ReactDirective, Input, BasicState, IComplexLogicDefine } fro
 
 @Directive({ name: "custom-click", displayName: "自定义点击" })
 export class CustomClickDirective extends ReactDirective {
-  @Input()
+  @Input({ required: true })
   public host!: string;
 
   @Input()
-  public eventType: "setState" = "setState";
-
-  @Input()
   public attrName: string = "onClick";
-
-  @Input()
-  public targetName!: string;
 
   @Input({ useExpression: true })
   public expression: IComplexLogicDefine = { expressions: [] };
