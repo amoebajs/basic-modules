@@ -84,7 +84,6 @@ export class DemoComposition extends ReactComposition {
             <CustomClick>
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn01")} />
-                <CustomClick.targetName value={this.loadingStateName} />
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
@@ -106,7 +105,6 @@ export class DemoComposition extends ReactComposition {
             <CustomClick>
               <CustomClick.Inputs>
                 <CustomClick.host value={this.childKey("zenBtn02")} />
-                <CustomClick.targetName value={this.loadingStateName} />
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
