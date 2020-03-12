@@ -104,12 +104,34 @@ page:
             label:
               type: literal
               expression: 字段04：
-            placeholder:
-              type: literal
-              expression: checkbox-placeholder
             value:
               type: literal
               expression: [abcd, ijkl]
+            options:
+              type: literal
+              expression:
+                - [option01, abcd]
+                - [option02, efgh]
+                - [option03, ijkl]
+                - [optionn4, mnop]
+        - ref: ZentFormField
+          id: FormFieldInstance05
+          input:
+            type:
+              type: literal
+              expression: select
+            name:
+              type: literal
+              expression: field05
+            label:
+              type: literal
+              expression: 字段05：
+            placeholder:
+              type: literal
+              expression: select-placeholder
+            value:
+              type: literal
+              expression: abcd
             options:
               type: literal
               expression:
