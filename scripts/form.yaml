@@ -91,3 +91,13 @@ page:
               expression: wsvgqw77we7d27adscf873f8a7dtf
         - ref: ZentFormSubmit
           id: FormSubmitInstance
+          input:
+            showCancel:
+              type: literal
+              expression: true
+            submitText:
+              type: literal
+              expression: 提交
+            cancelText:
+              type: literal
+              expression: 放弃
