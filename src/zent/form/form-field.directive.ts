@@ -54,6 +54,9 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   @Input({ name: "placeholder" })
   public formFieldPlaceholder!: string;
 
+  @Input({ name: "required" })
+  public formFieldRequired!: boolean;
+
   @Input({ name: "value" })
   public formFieldDefaultValue!: any;
 
@@ -96,14 +99,16 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   private prepareForText(element: JsxElementGenerator, props: Record<string, any> = {}) {
     element.setTagName(this.formFieldTextInput.name);
     if (!Utils.is.nullOrUndefined(this.formFieldPlaceholder)) {
-      element.addJsxAttr(
-        "props",
-        JSON.stringify({
-          ...props,
-          placeholder: this.formFieldPlaceholder,
-          style: { width: "300px" },
-        }),
-      );
+      element
+        .addJsxAttr(
+          "props",
+          JSON.stringify({
+            ...props,
+            placeholder: this.formFieldPlaceholder,
+            style: { width: "300px" },
+          }),
+        )
+        .addJsxAttr("required", `${this.formFieldRequired ?? false}`);
     }
     if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
       element.addJsxAttr("defaultValue", `"${this.formFieldDefaultValue}"`);
@@ -116,14 +121,16 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
 
   private prepareForNumber(element: JsxElementGenerator, props: Record<string, any> = {}) {
     if (!Utils.is.nullOrUndefined(this.formFieldPlaceholder)) {
-      element.addJsxAttr(
-        "props",
-        JSON.stringify({
-          ...props,
-          placeholder: this.formFieldPlaceholder,
-          style: { width: "300px" },
-        }),
-      );
+      element
+        .addJsxAttr(
+          "props",
+          JSON.stringify({
+            ...props,
+            placeholder: this.formFieldPlaceholder,
+            style: { width: "300px" },
+          }),
+        )
+        .addJsxAttr("required", `${this.formFieldRequired ?? false}`);
     }
     if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
       element.addJsxAttr("defaultValue", `${this.formFieldDefaultValue}`);

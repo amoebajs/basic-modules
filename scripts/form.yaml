@@ -41,6 +41,9 @@ page:
             type:
               type: literal
               expression: number
+            required:
+              type: literal
+              expression: true
             name:
               type: literal
               expression: field01
