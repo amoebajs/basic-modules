@@ -92,6 +92,31 @@ page:
             value:
               type: literal
               expression: wsvgqw77we7d27adscf873f8a7dtf
+        - ref: ZentFormField
+          id: FormFieldInstance04
+          input:
+            type:
+              type: literal
+              expression: checkbox
+            name:
+              type: literal
+              expression: field04
+            label:
+              type: literal
+              expression: 字段04：
+            placeholder:
+              type: literal
+              expression: checkbox-placeholder
+            value:
+              type: literal
+              expression: [abcd, ijkl]
+            options:
+              type: literal
+              expression:
+                - [option01, abcd]
+                - [option02, efgh]
+                - [option03, ijkl]
+                - [optionn4, mnop]
         - ref: ZentFormSubmit
           id: FormSubmitInstance
           input:

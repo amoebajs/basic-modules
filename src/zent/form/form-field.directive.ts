@@ -42,6 +42,12 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   @Reference("number-input")
   protected formFieldNumberInput!: VariableRef;
 
+  @Reference("checkbox")
+  protected formFieldCheckbox!: VariableRef;
+
+  @Reference("checkbox-group")
+  protected formFieldCheckboxGroup!: VariableRef;
+
   @Input({ name: "name", required: true })
   public formFieldName!: string;
 
@@ -59,6 +65,9 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
 
   @Input({ name: "value" })
   public formFieldDefaultValue!: any;
+
+  @Input({ name: "options", useMap: { key: "string", value: "any" } })
+  public formFieldOptions: Array<[string, string]> = [];
 
   protected async onAttach() {
     const set = this.render.getRootState("formFields");
@@ -91,6 +100,10 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
         this.prepareForNumber(element);
         this.importFormField(element, "FormNumberInputField", this.formFieldNumberInput);
         break;
+      case FormFieldType.Checkbox:
+        this.prepareForCheckbox(element);
+        this.importFormField(element, "FormCheckboxGroupField", this.formFieldCheckboxGroup);
+        break;
       default:
         break;
     }
@@ -98,17 +111,16 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
 
   private prepareForText(element: JsxElementGenerator, props: Record<string, any> = {}) {
     element.setTagName(this.formFieldTextInput.name);
+    element.addJsxAttr("required", `${this.formFieldRequired ?? false}`);
     if (!Utils.is.nullOrUndefined(this.formFieldPlaceholder)) {
-      element
-        .addJsxAttr(
-          "props",
-          JSON.stringify({
-            ...props,
-            placeholder: this.formFieldPlaceholder,
-            style: { width: "300px" },
-          }),
-        )
-        .addJsxAttr("required", `${this.formFieldRequired ?? false}`);
+      element.addJsxAttr(
+        "props",
+        JSON.stringify({
+          ...props,
+          placeholder: this.formFieldPlaceholder,
+          style: { width: "300px" },
+        }),
+      );
     }
     if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
       element.addJsxAttr("defaultValue", `"${this.formFieldDefaultValue}"`);
@@ -120,20 +132,42 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   }
 
   private prepareForNumber(element: JsxElementGenerator, props: Record<string, any> = {}) {
+    element.setTagName(this.formFieldNumberInput.name);
+    element.addJsxAttr("required", `${this.formFieldRequired ?? false}`);
     if (!Utils.is.nullOrUndefined(this.formFieldPlaceholder)) {
-      element
-        .addJsxAttr(
-          "props",
-          JSON.stringify({
-            ...props,
-            placeholder: this.formFieldPlaceholder,
-            style: { width: "300px" },
-          }),
-        )
-        .addJsxAttr("required", `${this.formFieldRequired ?? false}`);
+      element.addJsxAttr(
+        "props",
+        JSON.stringify({
+          ...props,
+          placeholder: this.formFieldPlaceholder,
+          style: { width: "300px" },
+        }),
+      );
     }
     if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
       element.addJsxAttr("defaultValue", `${this.formFieldDefaultValue}`);
+    }
+  }
+
+  private prepareForCheckbox(element: JsxElementGenerator, props: Record<string, any> = {}) {
+    element.addJsxAttr("props", JSON.stringify(props)).addJsxAttr("required", `${this.formFieldRequired ?? false}`);
+    if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
+      const values = Utils.is.array(this.formFieldDefaultValue)
+        ? this.formFieldDefaultValue
+        : [this.formFieldDefaultValue];
+      element.addJsxAttr("defaultValue", `[${values.map(i => `"${i}"`).join(", ")}]`);
+    }
+    if (this.formFieldOptions.length > 0) {
+      element.addJsxChildren(
+        this.formFieldOptions.map(([k, v]) =>
+          this.createNode("jsx-element")
+            .setTagName(this.formFieldCheckbox.name)
+            .addJsxAttrs({
+              value: `"${v}"`,
+            })
+            .addJsxChild(k),
+        ),
+      );
     }
   }
 
@@ -144,6 +178,10 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
       case "FormInputField":
       case "FormNumberInputField":
         imports.push(this.helper.createImport("zent/css/input.css"));
+        break;
+      case "FormCheckboxGroupField":
+        imports.push(this.helper.createImport("zent/es/checkbox", this.formFieldCheckbox.name));
+        imports.push(this.helper.createImport("zent/css/checkbox.css"));
         break;
       default:
         break;
