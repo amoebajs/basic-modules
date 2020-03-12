@@ -72,8 +72,9 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   @Input({ name: "required" })
   public formFieldRequired!: boolean;
 
+  // TODO: type define of any
   @Input({ name: "value" })
-  public formFieldDefaultValue!: any;
+  public formFieldDefaultValue!: string;
 
   @Input({ name: "options", useMap: { key: "string", value: "any" } })
   public formFieldOptions: Array<[string, string]> = [];
