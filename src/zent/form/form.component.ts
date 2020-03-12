@@ -1,4 +1,13 @@
-import { Component, Require, Reference, VariableRef, IAfterInit, IAfterDirectivesAttach } from "@amoebajs/builder";
+import {
+  Component,
+  Require,
+  Reference,
+  Input,
+  VariableRef,
+  IAfterInit,
+  IAfterDirectivesAttach,
+  Utils,
+} from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
@@ -7,6 +16,11 @@ import { IUniversalFormField } from "./form-field.directive";
 export interface IUniversalFormState {
   formRefname: string;
   formFields: Record<string, IUniversalFormField>;
+}
+
+export enum FormDirection {
+  Horizontal = "horizontal",
+  Vertical = "vertical",
 }
 
 @Component({
@@ -32,12 +46,15 @@ export class UniversalForm extends ZentComponent<IUniversalFormState> implements
   @Reference("form-refname")
   protected formRefname!: VariableRef;
 
+  @Input({ name: "direction", useEnums: Utils.getEnumValues(FormDirection) })
+  public formDirection: FormDirection = FormDirection.Horizontal;
+
   public afterInit() {
     this.setTagName(this.formRoot.name);
     this.setState("formFields", {});
     this.setState("formRefname", this.formRefname.name);
     this.addAttributeWithSyntaxText("form", this.formRefname.name);
-    this.addAttributeWithSyntaxText("layout", `"${"horizontal"}"`);
+    this.addAttributeWithSyntaxText("layout", `"${this.formDirection}"`);
     this.addUnshiftVariable(this.formRefname.name, this.createRefExpression());
   }
 
