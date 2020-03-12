@@ -139,6 +139,21 @@ page:
                 - [option02, efgh]
                 - [option03, ijkl]
                 - [optionn4, mnop]
+        - ref: ZentFormField
+          id: FormFieldInstance06
+          input:
+            type:
+              type: literal
+              expression: switch
+            name:
+              type: literal
+              expression: field06
+            label:
+              type: literal
+              expression: 字段06：
+            value:
+              type: literal
+              expression: true
         - ref: ZentFormSubmit
           id: FormSubmitInstance
           input:

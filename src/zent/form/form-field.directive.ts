@@ -42,6 +42,9 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
   @Reference("number-input")
   protected formFieldNumberInput!: VariableRef;
 
+  @Reference("switch")
+  protected formFieldSwitch!: VariableRef;
+
   @Reference("select")
   protected formFieldSelect!: VariableRef;
 
@@ -114,6 +117,10 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
         this.prepareForSelect(element);
         this.importFormField(element, "FormSelectField", this.formFieldSelect);
         break;
+      case FormFieldType.Switch:
+        this.prepareForSwitch(element);
+        this.importFormField(element, "FormSwitchField", this.formFieldSwitch);
+        break;
       default:
         break;
     }
@@ -139,6 +146,14 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
 
   private prepareForTextarea(element: JsxElementGenerator) {
     this.prepareForText(element, { type: "textarea" });
+  }
+
+  private prepareForSwitch(element: JsxElementGenerator) {
+    element.setTagName(this.formFieldSwitch.name);
+    element.addJsxAttr("required", `${this.formFieldRequired ?? false}`);
+    if (!Utils.is.nullOrUndefined(this.formFieldDefaultValue)) {
+      element.addJsxAttr("defaultValue", `${String(this.formFieldDefaultValue) === "true"}`);
+    }
   }
 
   private prepareForNumber(element: JsxElementGenerator, props: Record<string, any> = {}) {
@@ -208,6 +223,9 @@ export class UniversalFormField extends ZentDirective<IUniversalFormState> {
         break;
       case "FormSelectField":
         imports.push(this.helper.createImport("zent/css/select.css"));
+        break;
+      case "FormSwitchField":
+        imports.push(this.helper.createImport("zent/css/switch.css"));
         break;
       default:
         break;
