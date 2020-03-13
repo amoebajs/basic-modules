@@ -1,11 +1,7 @@
 const { register } = require("tsconfig-paths");
+const { getTspaths } = require("./utils");
 
 register({
   baseUrl: ".",
-  paths: {
-    react: ["./node_modules/react/cjs/react.production.min.js"],
-    "@amoebajs/builder": ["./node_modules/@amoebajs/builder"],
-    "@amoebajs/builder/es/*": ["./node_modules/@amoebajs/builder/lib/*"],
-    "@amoebajs/builder/lib/*": ["./node_modules/@amoebajs/builder/lib/*"],
-  },
+  paths: getTspaths("npm"),
 });
