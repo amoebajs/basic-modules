@@ -4,7 +4,7 @@ import chalk from "chalk";
 import webpack from "webpack";
 import WebpackDevServer from "webpack-dev-server";
 import { Factory, IWebpackOptions } from "@amoebajs/builder";
-import { writeDeptsFile } from "@amoebajs/builder/es/providers/webpack/builder/build.node";
+import { initSandbox } from "@amoebajs/builder/es/providers/webpack/builder/build.node";
 
 const ENV_MODE = process.env.ENV_MODE || "build";
 
@@ -19,12 +19,17 @@ async function build() {
   const sandbox = {
     rootPath: path.resolve(__dirname, "..", "build"),
     dependencies: JSON.parse(fs.readFileSync(path.resolve(src, "dependencies.json")).toString()),
+    install: {
+      type: <"trigger">"trigger",
+      trigger: (data: string) => console.log(data),
+      registry: "https://registry.npm.taobao.org",
+    },
   };
 
   if (ENV_MODE === "watch") {
     const { webpackConfig: config } = builder;
 
-    writeDeptsFile(<any>fs, path, sandbox.rootPath, sandbox.dependencies).then(() => {
+    initSandbox(<any>fs, path, sandbox).then(() => {
       const server = new WebpackDevServer(
         webpack(
           <any>config.getConfigs({

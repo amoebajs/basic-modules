@@ -14,8 +14,8 @@
   "scripts": {
     "clear:dist": "npx rimraf dist",
     "update:core": "yarn add @amoebajs/builder -D --registry=https://registry.npmjs.org",
-    "webpack:build": "cross-env ENV_MODE=build ts-node -r ./scripts/tspaths scripts/build.ts",
-    "webpack:watch": "cross-env ENV_MODE=watch ts-node -r ./scripts/tspaths scripts/build.ts",
+    "webpack:build": "cross-env ENV_MODE=build node -r ts-node/register -r ./scripts/tspaths-npm scripts/build.ts",
+    "webpack:watch": "cross-env ENV_MODE=watch node -r ts-node/register -r ./scripts/tspaths-npm scripts/build.ts",
     "watch:src": "tsnd --respawn -r ./scripts/tspaths scripts/compile.ts",
     "build:src": "ts-node -r ./scripts/tspaths scripts/compile.ts",
     "watch:npm": "tsnd --respawn -r ./scripts/tspaths-npm scripts/compile.ts",
@@ -32,7 +32,7 @@
     "@amoebajs/builder": "*"
   },
   "devDependencies": {
-    "@amoebajs/builder": "^0.0.2-alpha.1583915074404",
+    "@amoebajs/builder": "^0.0.2-alpha.1584621901829",
     "@bigmogician/publisher": "^1.0.12",
     "@types/lodash": "^4.14.149",
     "@types/webpack": "^4.41.0",
