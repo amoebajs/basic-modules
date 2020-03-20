@@ -21,7 +21,7 @@ import { UniversalFormSubmit } from "./form/form-submit.directive";
     UniversalFormSubmit,
   ],
   dependencies: {
-    rxjs: "^6.4.0",
+    rxjs: "^6.5.3",
     zent: "^8.0.0",
     zanPcAjax: "^4.0.0",
   },
