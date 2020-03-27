@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "module": "es/index.js",
   "types": "es/index.d.ts",
-  "repository": "https://github.com/amoebajs/builder.git",
+  "repository": "https://github.com/amoebajs/basic-modules.git",
   "contributors": [
     "bigmogician <bigmogician@outlook.com>",
     "pigwang <pigw4ng@gmail.com>"
