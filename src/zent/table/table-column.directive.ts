@@ -20,7 +20,7 @@ export class UniversalTableColumn extends ZentDirective<IUniversalTable> {
   @Input({ name: "width" })
   public tcWidth!: string;
 
-  @Input({ name: "mode" })
+  @Input({ name: "mode", useEnums: Utils.getEnumValues(TableColumnMode) })
   public tcMode: TableColumnMode = TableColumnMode.Normal;
 
   protected async onAttach() {
@@ -33,16 +33,14 @@ export class UniversalTableColumn extends ZentDirective<IUniversalTable> {
       name: this.normalizeKV("name", this.tcName),
       title: this.normalizeKV("title", this.tcTitle),
       width: this.normalizeKV("width", this.tcWidth),
-      fixed: this.normalizeKV("fixed", this.tcMode),
+      fixed: this.tcMode,
     });
   }
 
   protected normalizeKV(name: string, value: any) {
     switch (name) {
-      case "fixed":
-        return value === TableColumnMode.Normal ? void 0 : `"${this.tcMode}"`;
       case "width":
-        return Number.isNaN(+value) ? `"${value}"` : value;
+        return Utils.is.nullOrUndefined(value) ? void 0 : Number.isNaN(+value) ? `"${value}"` : value;
       case "name":
       case "title":
       default:

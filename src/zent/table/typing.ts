@@ -9,7 +9,8 @@ export interface IUniversalTableColumn {
   title: string;
   name?: string;
   width?: string;
-  fixed?: string;
+  fixed?: TableColumnMode;
+  textAlign?: string;
 }
 
 export enum TableColumnMode {
