@@ -20,8 +20,8 @@ async function build() {
     rootPath: path.resolve(__dirname, "..", "build"),
     dependencies: JSON.parse(fs.readFileSync(path.resolve(src, "dependencies.json")).toString()),
     install: {
-      type: <"trigger">"trigger",
-      trigger: (data: string) => console.log(data),
+      // type: <"trigger">"trigger",
+      // trigger: (data: string) => console.log(data),
       registry: "https://registry.npm.taobao.org",
     },
   };
