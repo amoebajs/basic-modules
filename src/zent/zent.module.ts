@@ -7,18 +7,21 @@ import { ZentLoadingDirective } from "./loading/loading.directive";
 import { UniversalForm } from "./form/form.component";
 import { UniversalFormField } from "./form/form-field.directive";
 import { UniversalFormSubmit } from "./form/form-submit.directive";
+import { UniversalTable } from "./table/table.component";
+import { UniversalTableColumn } from "./table/table-column.directive";
 
 @Module({
   name: "zent-module",
   displayName: "Zent模块",
   provider: "react",
-  components: [ZentButtonComponent, ZentLoadingComponent, UniversalForm],
+  components: [ZentButtonComponent, ZentLoadingComponent, UniversalForm, UniversalTable],
   directives: [
     ZentBaseCssDirective,
     ZentComponentImportDirective,
     ZentLoadingDirective,
     UniversalFormField,
     UniversalFormSubmit,
+    UniversalTableColumn,
   ],
   dependencies: {
     rxjs: "^6.5.3",
