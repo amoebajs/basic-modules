@@ -17,10 +17,13 @@ export enum HttpMethod {
 })
 export class HttpCallDirective extends ReactDirective {
   @Input({ name: "name", useEnums: Utils.getEnumValues(HttpMethod) })
-  public hcMethod: HttpMethod = HttpMethod.Get;
+  public hcMethod?: HttpMethod;
 
-  @Input({ name: "path", required: true })
+  @Input({ name: "path" })
   public hcPath!: string;
+
+  @Input({ name: "query", useMap: { key: "string", value: "any" } })
+  public hcQuery: Array<[string, string]> = [];
 
   @Reference("axios")
   protected hcAxiosImport!: VariableRef;
@@ -37,21 +40,22 @@ export class HttpCallDirective extends ReactDirective {
     await super.onAttach();
     this.render.appendRootVariable(
       this.hcRequestName.name,
-      this.helper.__engine.createIdentifier(`() => ${this.hcAxiosImport.name}(${this.createAxiosParams()})`),
+      this.helper.__engine.createIdentifier(
+        `(options: any = {}) => ${this.hcAxiosImport.name}(${this.createAxiosParams()})`,
+      ),
       "unshift",
     );
   }
 
   private createAxiosParams() {
-    if (Utils.is.nullOrUndefined(this.hcPath)) {
-      throw new Error("[http-call] axios url path cannot be empty.");
-    }
     const params = {
-      url: `"${this.hcPath}"`,
-      method: `"${this.hcMethod}"`,
+      url: this.hcPath && `"${this.hcPath}"`,
+      method: this.hcMethod && `"${this.hcMethod}"`,
     };
-    return `{ ${Object.entries(params)
+    const content = Object.entries(params)
+      .filter(([, v]) => !Utils.is.nullOrUndefined(v))
       .map(([k, v]) => `${k}: ${v}`)
-      .join(", ")} }`;
+      .join(", ");
+    return `{ ${content.length === 0 ? "" : ", "}...options }`;
   }
 }

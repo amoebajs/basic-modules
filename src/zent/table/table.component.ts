@@ -26,12 +26,10 @@ import { HttpCallDirective } from "../../common/directives/http-call.directive";
   target: "grid",
   alias: (i: UniversalTable) => i.tableRoot.name,
 })
-@Require(ZentLoadingDirective, {
+@Require(ZentLoadingDirective, "Loading", {
   expression: (i: UniversalTable) => i.tableLoading,
 })
-@Require(HttpCallDirective, "HttpCall", {
-  path: (i: UniversalTable) => i.tableFetchUrl,
-})
+@Require(HttpCallDirective, "HttpCall")
 export class UniversalTable extends ZentComponent<IUniversalTable> implements IAfterInit, IAfterDirectivesAttach {
   @Reference("table")
   protected tableRoot!: VariableRef;
@@ -90,15 +88,14 @@ export class UniversalTable extends ZentComponent<IUniversalTable> implements IA
       {
         type: "complexLogic",
         expression: {
-          vars: [`fn is $(${this.tableStateName} | bind:setState)`],
+          vars: [`setState is $(${this.tableStateName} | bind:setState)`],
           expressions: [
             "try {",
             // `let promise = Promise.resolve({ items: [], pagination: { current: current + 1, pageSize, total: 200 } });`,
-            `let promise = ${axiosFn}();`,
-            "let { items, pagination } = await promise;",
+            `const { items, pagination } = await ${axiosFn}({ url: \`https://www.baidu.com?current=\${current}&pageSize=\${pageSize}\`});`,
             "console.log(items);",
             "console.log(pagination);",
-            `fn({ dataset: items || [], pagination: { ...pagination } })`,
+            `setState({ dataset: items || [], pagination: { ...pagination } });`,
             "} catch(error) { console.log(error); }",
           ],
         },
