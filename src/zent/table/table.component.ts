@@ -14,6 +14,7 @@ import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { IUniversalTable, IUniversalTableColumn, TableColumnMode } from "./typing";
 import { ZentLoadingDirective } from "../loading/loading.directive";
+import { HttpCallDirective } from "../../common/directives/http-call.directive";
 
 @Component({
   name: "universal-table",
@@ -27,6 +28,9 @@ import { ZentLoadingDirective } from "../loading/loading.directive";
 })
 @Require(ZentLoadingDirective, {
   expression: (i: UniversalTable) => i.tableLoading,
+})
+@Require(HttpCallDirective, "HttpCall", {
+  path: (i: UniversalTable) => i.tableFetchUrl,
 })
 export class UniversalTable extends ZentComponent<IUniversalTable> implements IAfterInit, IAfterDirectivesAttach {
   @Reference("table")
@@ -46,6 +50,9 @@ export class UniversalTable extends ZentComponent<IUniversalTable> implements IA
 
   @Input({ name: "stateName" })
   public tableStateName: string = "dataset";
+
+  @Input({ name: "fetchUrl", required: true })
+  public tableFetchUrl!: string;
 
   private _datasetName = "dataset";
   private _paginationName = "pagination";
@@ -77,6 +84,7 @@ export class UniversalTable extends ZentComponent<IUniversalTable> implements IA
   }
 
   private createChangeCallback() {
+    const axiosFn = this.render.createDirectiveRefAccess("HttpCall", "request-name");
     const contextName = this.getState(BasicState.ContextInfo).name;
     const expression = this.helper.useComplexLogicExpression(
       {
@@ -84,11 +92,14 @@ export class UniversalTable extends ZentComponent<IUniversalTable> implements IA
         expression: {
           vars: [`fn is $(${this.tableStateName} | bind:setState)`],
           expressions: [
-            `let promise = Promise.resolve({ items: [], pagination: { current: current + 1, pageSize, total: 200 } });`,
+            "try {",
+            // `let promise = Promise.resolve({ items: [], pagination: { current: current + 1, pageSize, total: 200 } });`,
+            `let promise = ${axiosFn}();`,
             "let { items, pagination } = await promise;",
             "console.log(items);",
             "console.log(pagination);",
             `fn({ dataset: items || [], pagination: { ...pagination } })`,
+            "} catch(error) { console.log(error); }",
           ],
         },
       },

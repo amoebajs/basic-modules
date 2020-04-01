@@ -15,6 +15,10 @@ directives:
     name: global-state
     module: ambjs-common-module
     version: 0.0.1-beta.0
+  - id: HttpCall
+    name: http-call
+    module: ambjs-common-module
+    version: 0.0.1-beta.0
   - id: ZentTableColumn
     name: universal-table-column
     module: zent-module
@@ -49,6 +53,9 @@ page:
         stateName:
           type: literal
           expression: tableData
+        fetchUrl:
+          type: literal
+          expression: https://www.baidu.com
       directives:
         - ref: ZentTableColumn
           id: TableColumnInstance01

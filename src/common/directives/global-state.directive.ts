@@ -1,4 +1,3 @@
-import ts from "typescript";
 import { Utils, Directive, ReactDirective, Input, BasicState, VariableGenerator } from "@amoebajs/builder";
 
 @Directive({
@@ -12,6 +11,10 @@ export class GlobalStateDirective extends ReactDirective {
 
   @Input({ name: "name" })
   defaultStateName: string = "__CONTEXT__";
+
+  private get engine() {
+    return this.helper.__engine;
+  }
 
   protected async onInit() {
     await super.onInit();
@@ -30,7 +33,9 @@ export class GlobalStateDirective extends ReactDirective {
   }
 
   private createContextBody() {
-    return ts.createObjectLiteral([ts.createPropertyAssignment(Utils.REACT.State, this.createState())]);
+    return this.engine.createObjectLiteral([
+      this.engine.createPropertyAssignment(Utils.REACT.State, this.createState()),
+    ]);
   }
 
   private createStates() {
@@ -38,14 +43,17 @@ export class GlobalStateDirective extends ReactDirective {
   }
 
   private createState() {
-    return ts.createObjectLiteral(
+    return this.engine.createObjectLiteral(
       this.render.getRootStates().map(i => {
         const name = getReactStateName(i);
-        return ts.createPropertyAssignment(
+        return this.engine.createPropertyAssignment(
           name,
-          ts.createObjectLiteral([
-            ts.createPropertyAssignment("value", ts.createIdentifier(name)),
-            ts.createPropertyAssignment("setState", ts.createIdentifier("set" + Utils.classCase(name))),
+          this.engine.createObjectLiteral([
+            this.engine.createPropertyAssignment("value", this.engine.createIdentifier(name)),
+            this.engine.createPropertyAssignment(
+              "setState",
+              this.engine.createIdentifier("set" + Utils.classCase(name)),
+            ),
           ]),
         );
       }),
