@@ -31,16 +31,16 @@ export class UniversalTableColumn extends ZentDirective<IUniversalTable> {
     set.push({
       id: this.tcId,
       name: this.normalizeKV("name", this.tcName),
-      title: this.normalizeKV("title", this.tcTitle),
+      title: this.normalizeKV("title", this.tcTitle)!,
       width: this.normalizeKV("width", this.tcWidth),
       fixed: this.tcMode,
     });
   }
 
-  protected normalizeKV(name: string, value: any) {
+  protected normalizeKV(name: string, value: any): string | undefined {
     switch (name) {
       case "width":
-        return Utils.is.nullOrUndefined(value) ? void 0 : Number.isNaN(+value) ? `"${value}"` : value;
+        return Utils.is.nullOrUndefined(value) ? void 0 : Number.isNaN(+value) ? `"${value}"` : String(value);
       case "name":
       case "title":
       default:

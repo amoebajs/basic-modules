@@ -6,11 +6,13 @@ import {
   IAfterInit,
   IAfterDirectivesAttach,
   Utils,
+  Input,
 } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { IUniversalTable, IUniversalTableColumn, TableColumnMode } from "./typing";
+import { ZentLoadingDirective } from "../loading/loading.directive";
 
 @Component({
   name: "universal-table",
@@ -20,7 +22,10 @@ import { IUniversalTable, IUniversalTableColumn, TableColumnMode } from "./typin
 @Require(ZentBaseCssDirective, { target: "grid" })
 @Require(ZentComponentImportDirective, {
   target: "grid",
-  alias: ({ tableRoot }: UniversalTable) => tableRoot.name,
+  alias: (i: UniversalTable) => i.tableRoot.name,
+})
+@Require(ZentLoadingDirective, {
+  name: (i: UniversalTable) => (i.tableAutoLoading ? "!" + i.tableDatasetName : false),
 })
 export class UniversalTable extends ZentComponent<IUniversalTable> implements IAfterInit, IAfterDirectivesAttach {
   @Reference("table")
@@ -29,10 +34,17 @@ export class UniversalTable extends ZentComponent<IUniversalTable> implements IA
   @Reference("table-columns-var")
   protected tableColumnsVar!: VariableRef;
 
+  @Input({ name: "autoLoading" })
+  public tableAutoLoading: boolean = true;
+
+  @Input({ name: "datasetName" })
+  public tableDatasetName: string = "datasets";
+
   public afterInit() {
     this.setState("tableColumns", []);
     this.setTagName(this.tableRoot.name);
     this.addAttributeWithSyntaxText("columns", this.tableColumnsVar.name);
+    this.addAttributeWithSyntaxText("datasets", this.render.createStateAccessSyntax(this.tableDatasetName));
   }
 
   public afterDirectivesAttach() {
