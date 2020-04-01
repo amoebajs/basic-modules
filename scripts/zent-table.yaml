@@ -41,10 +41,14 @@ page:
         state:
           type: literal
           expression:
-            - [datasets, []]
+            - [tableData, {}]
   children:
     - ref: ZentTable
-      id: AppInnerSection01
+      id: Section01
+      input:
+        stateName:
+          type: literal
+          expression: tableData
       directives:
         - ref: ZentTableColumn
           id: TableColumnInstance01

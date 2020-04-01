@@ -10,6 +10,9 @@ export class ZentLoadingDirective extends ZentDirective {
   @Input({ name: "name" })
   public stateName: string = "loading";
 
+  @Input({ name: "expression" })
+  public expression!: string;
+
   @Reference("block-loading")
   protected comp!: VariableRef;
 
@@ -22,7 +25,7 @@ export class ZentLoadingDirective extends ZentDirective {
     this.render.appendRootEleChangeFns(pageRoot =>
       this.createNode("jsx-element")
         .setTagName(this.comp.name)
-        .addJsxAttr("loading", this.render.createStateAccessSyntax(this.stateName))
+        .addJsxAttr("loading", this.expression ?? this.render.createStateAccessSyntax(this.stateName))
         .addJsxChildren([pageRoot]),
     );
   }

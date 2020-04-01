@@ -7,6 +7,7 @@ import {
   IAfterDirectivesAttach,
   Utils,
   Input,
+  BasicState,
 } from "@amoebajs/builder";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
@@ -25,32 +26,83 @@ import { ZentLoadingDirective } from "../loading/loading.directive";
   alias: (i: UniversalTable) => i.tableRoot.name,
 })
 @Require(ZentLoadingDirective, {
-  name: (i: UniversalTable) => (i.tableAutoLoading ? "!" + i.tableDatasetName : false),
+  expression: (i: UniversalTable) => i.tableLoading,
 })
 export class UniversalTable extends ZentComponent<IUniversalTable> implements IAfterInit, IAfterDirectivesAttach {
   @Reference("table")
   protected tableRoot!: VariableRef;
 
-  @Reference("table-columns-var")
+  @Reference("table-data")
+  protected tableDataVar!: VariableRef;
+
+  @Reference("table-columns")
   protected tableColumnsVar!: VariableRef;
+
+  @Reference("table-change-callback")
+  protected tableChangeCallback!: VariableRef;
 
   @Input({ name: "autoLoading" })
   public tableAutoLoading: boolean = true;
 
-  @Input({ name: "datasetName" })
-  public tableDatasetName: string = "datasets";
+  @Input({ name: "stateName" })
+  public tableStateName: string = "dataset";
+
+  private _datasetName = "dataset";
+  private _paginationName = "pagination";
+
+  protected get tableLoading() {
+    return this.tableAutoLoading ? "!" + this.datasetName : false;
+  }
+
+  protected get dataSyntaxPath() {
+    return this.render.createStateAccessSyntax(this.tableStateName);
+  }
+
+  protected get datasetName() {
+    return this.tableDataVar.name + "." + this._datasetName;
+  }
+
+  protected get paginationName() {
+    return this.tableDataVar.name + "." + this._paginationName;
+  }
 
   public afterInit() {
     this.setState("tableColumns", []);
     this.setTagName(this.tableRoot.name);
     this.addAttributeWithSyntaxText("columns", this.tableColumnsVar.name);
-    this.addAttributeWithSyntaxText("datasets", this.render.createStateAccessSyntax(this.tableDatasetName));
+    this.addAttributeWithSyntaxText("datasets", this.datasetName);
+    this.addAttributeWithSyntaxText("onChange", this.tableChangeCallback.name);
+    this.addUnshiftVariable(this.tableDataVar.name, this.helper.__engine.createIdentifier(this.dataSyntaxPath));
+    this.createChangeCallback();
+  }
+
+  private createChangeCallback() {
+    const contextName = this.getState(BasicState.ContextInfo).name;
+    const expression = this.helper.useComplexLogicExpression(
+      {
+        type: "complexLogic",
+        expression: {
+          vars: [`fn is $(${this.tableStateName} | bind:setState)`],
+          expressions: [
+            `let promise = Promise.resolve({ items: [], pagination: { current: current + 1, pageSize, total: 200 } });`,
+            "let { items, pagination } = await promise;",
+            "console.log(items);",
+            "console.log(pagination);",
+            `fn({ dataset: items || [], pagination: { ...pagination } })`,
+          ],
+        },
+      },
+      contextName,
+    );
+    this.addUseCallback(this.tableChangeCallback.name, `async ({current, pageSize}: any) => { ${expression} }`, [
+      this.tableDataVar.name,
+    ]);
   }
 
   public afterDirectivesAttach() {
     const columns = this.getState("tableColumns");
     const newColumns = this.resortColumns(columns);
-    this.addPushedVariable(
+    this.addUnshiftVariable(
       this.tableColumnsVar.name,
       this.helper.__engine.createIdentifier(`[${newColumns.map(i => this.useEachColumn(i)).join(", ")}]`),
     );
