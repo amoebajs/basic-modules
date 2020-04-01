@@ -11,6 +11,10 @@ components:
     module: zent-module
     version: 0.0.1-beta.0
 directives:
+  - id: GlobalState
+    name: global-state
+    module: ambjs-common-module
+    version: 0.0.1-beta.0
   - id: ZentTableColumn
     name: universal-table-column
     module: zent-module
@@ -27,6 +31,17 @@ page:
           - [left, 24px]
           - [right, 24px]
           - [top, 36px]
+  directives:
+    - ref: GlobalState
+      id: GlobalStateIns01
+      input:
+        name:
+          type: literal
+          expression: AppContext
+        state:
+          type: literal
+          expression:
+            - [datasets, []]
   children:
     - ref: ZentTable
       id: AppInnerSection01

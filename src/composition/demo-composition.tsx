@@ -57,7 +57,7 @@ export class DemoComposition extends ReactComposition {
             </GlobalState.Inputs>
           </GlobalState>
         )}
-        <Grid key="child01">
+        <Grid>
           <Grid.Inputs>
             <Grid.layoutBackground>#276ad7</Grid.layoutBackground>
             <Grid.layoutHeight>100px</Grid.layoutHeight>
@@ -66,13 +66,13 @@ export class DemoComposition extends ReactComposition {
             <Grid.gridRowSizes map={{ 1: 20, 2: 35, 3: 45 }} />
             <Grid.gridColumnSizes map={{ 1: 20, 2: 35, 3: 45 }} />
           </Grid.Inputs>
-          <Stack key="gridStack01">
+          <Stack>
             <Stack.Inputs>
               <Stack.layoutBackground>#8228a4</Stack.layoutBackground>
               <Stack.layoutHeight>100%</Stack.layoutHeight>
             </Stack.Inputs>
           </Stack>
-          <Stack key="gridStack02">
+          <Stack>
             <Stack.Inputs>
               <Stack.layoutBackground>#67f230</Stack.layoutBackground>
               <Stack.layoutHeight>100%</Stack.layoutHeight>
@@ -87,13 +87,13 @@ export class DemoComposition extends ReactComposition {
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
-            <Button key="zenBtn01" size="large" loading={`!${this.loadingStateName} | bind:state`}>
+            <Button size="large" loading={`!${this.loadingStateName} | bind:state`}>
               <Button.Inputs>
                 <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
               </Button.Inputs>
             </Button>
           </Stack>
-          <Stack key="gridStack03">
+          <Stack>
             <Stack.Inputs>
               <Stack.layoutBackground>#fe50a3</Stack.layoutBackground>
               <Stack.layoutHeight>100%</Stack.layoutHeight>
@@ -108,26 +108,26 @@ export class DemoComposition extends ReactComposition {
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
-            <Button key="zenBtn02" size="large" loading={`${this.loadingStateName} | bind:state`}>
+            <Button size="large" loading={`${this.loadingStateName} | bind:state`}>
               <Button.Inputs>
                 <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
               </Button.Inputs>
             </Button>
           </Stack>
         </Grid>
-        <Grid key="child02">
+        <Grid>
           <Grid.Inputs>
             <Grid.layoutBackground>#56a64e</Grid.layoutBackground>
             <Grid.layoutHeight>60px</Grid.layoutHeight>
           </Grid.Inputs>
         </Grid>
-        <Grid key="child03">
+        <Grid>
           <Grid.Inputs>
             <Grid.layoutBackground>#a645d3</Grid.layoutBackground>
             <Grid.layoutHeight>60px</Grid.layoutHeight>
           </Grid.Inputs>
         </Grid>
-        <Grid key="child04">
+        <Grid>
           <Grid.Inputs>
             <Grid.layoutBackground>#fa8701</Grid.layoutBackground>
             <Grid.layoutHeight>100px</Grid.layoutHeight>
