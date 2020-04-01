@@ -1,11 +1,11 @@
 import { Utils, Directive, ReactDirective, Input, BasicState, VariableGenerator } from "@amoebajs/builder";
 
 @Directive({
-  name: "global-state",
-  displayName: "全局状态",
+  name: "entity-state",
+  displayName: "模块状态",
   version: "0.0.1-beta.0",
 })
-export class GlobalStateDirective extends ReactDirective {
+export class EntityStateDirective extends ReactDirective {
   @Input({ name: "state", useMap: { key: "string", value: "any" } })
   defaultStates: Array<[string, any]> = [];
 
@@ -60,6 +60,22 @@ export class GlobalStateDirective extends ReactDirective {
     );
   }
 }
+
+/**
+ * ### 指令已废弃，请使用`EntityStateDirective`代替
+ *
+ * @deprecated replace with `entity-state`
+ * @author Big Mogician
+ * @export
+ * @class GlobalStateDirective
+ * @extends {EntityStateDirective}
+ */
+@Directive({
+  name: "global-state",
+  displayName: "全局状态（废弃）",
+  version: "0.0.1-beta.0",
+})
+export class GlobalStateDirective extends EntityStateDirective {}
 
 function getReactStateName(variable: VariableGenerator) {
   // 获取第一个变量内部名（arrayBinding形式的变量是没有名字的，是一个_nxxx的内部名）

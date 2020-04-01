@@ -1,15 +1,14 @@
 import React from "react";
 import { Composition, ReactComposition, useReconciler, Input, ChildrenSlot } from "@amoebajs/builder";
+import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
+import { EntityStateDirective, CustomClickDirective } from "../common/common.module";
 import { GridLayout } from "../layout/grid-layout.component";
 import { StackLayout } from "../layout/stack-layout.component";
-import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
-import { GlobalStateDirective } from "../common/directives/global-state.directive";
-import { CustomClickDirective } from "../common/common.module";
 
 const Grid = useReconciler(GridLayout);
 const Stack = useReconciler(StackLayout);
 const Button = useReconciler(ZentButtonComponent);
-const GlobalState = useReconciler(GlobalStateDirective);
+const RootState = useReconciler(EntityStateDirective);
 const CustomClick = useReconciler(CustomClickDirective);
 
 @Composition({
@@ -50,12 +49,12 @@ export class DemoComposition extends ReactComposition {
           <Stack.layoutBackground value="#8778a4" />
         </Stack.Inputs>
         {this.useChildrenStateScope && (
-          <GlobalState key="direc01">
-            <GlobalState.Inputs>
-              <GlobalState.defaultStateName value={this.entityId + "_context"} />
-              <GlobalState.defaultStates value={childrenState}></GlobalState.defaultStates>
-            </GlobalState.Inputs>
-          </GlobalState>
+          <RootState key="direc01">
+            <RootState.Inputs>
+              <RootState.defaultStateName value={this.entityId + "_context"} />
+              <RootState.defaultStates value={childrenState}></RootState.defaultStates>
+            </RootState.Inputs>
+          </RootState>
         )}
         <Grid>
           <Grid.Inputs>

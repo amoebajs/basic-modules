@@ -1,6 +1,6 @@
 import { Module } from "@amoebajs/builder";
 import { CustomClickDirective } from "./directives/custom-click.directive";
-import { GlobalStateDirective } from "./directives/global-state.directive";
+import { EntityStateDirective, GlobalStateDirective } from "./directives/entity-state.directive";
 import { HttpCallDirective } from "./directives/http-call.directive";
 
 @Module({
@@ -8,8 +8,8 @@ import { HttpCallDirective } from "./directives/http-call.directive";
   displayName: "Amoebajs基础模块",
   provider: "react",
   components: [],
-  directives: [GlobalStateDirective, CustomClickDirective, HttpCallDirective],
+  directives: [GlobalStateDirective, EntityStateDirective, CustomClickDirective, HttpCallDirective],
 })
 export class CommonModule {}
 
-export { GlobalStateDirective, CustomClickDirective };
+export { EntityStateDirective, CustomClickDirective, HttpCallDirective };

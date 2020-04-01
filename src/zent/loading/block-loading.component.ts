@@ -1,7 +1,7 @@
 import { Component, Require, Input, Attach, PropAttach, IAfterInit, Reference, VariableRef } from "@amoebajs/builder";
+import { EntityStateDirective } from "../../common/common.module";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
-import { GlobalStateDirective } from "../../common/directives/global-state.directive";
 import { ZentComponent } from "../base/base.component";
 
 @Component({ name: "loading", displayName: "全局Loading", parent: ZentComponent })
@@ -10,7 +10,7 @@ import { ZentComponent } from "../base/base.component";
   target: "loading/block-loading",
   alias: ({ formElement }: ZentLoadingComponent) => formElement.name,
 })
-@Require(GlobalStateDirective, {
+@Require(EntityStateDirective, {
   name: "AppContext",
   state: ({ stateName }: ZentLoadingComponent) => [[stateName, false]],
 })

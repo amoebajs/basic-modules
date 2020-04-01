@@ -1,4 +1,6 @@
 import { Module } from "@amoebajs/builder";
+import { ZentComponent } from "./base/base.component";
+import { ZentDirective } from "./base/base.directive";
 import { ZentBaseCssDirective } from "./directives/base-css.directive";
 import { ZentButtonComponent } from "./components/button.component";
 import { ZentComponentImportDirective } from "./directives/base-import.directive";
@@ -30,3 +32,18 @@ import { UniversalTableColumn } from "./table/table-column.directive";
   },
 })
 export class ZentModule {}
+
+export {
+  ZentComponent,
+  ZentDirective,
+  ZentButtonComponent,
+  ZentLoadingComponent,
+  UniversalForm,
+  UniversalTable,
+  ZentBaseCssDirective,
+  ZentComponentImportDirective,
+  ZentLoadingDirective,
+  UniversalFormField,
+  UniversalFormSubmit,
+  UniversalTableColumn,
+};

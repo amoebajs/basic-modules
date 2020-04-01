@@ -11,8 +11,8 @@ components:
     module: zent-module
     version: 0.0.1-beta.0
 directives:
-  - id: GlobalState
-    name: global-state
+  - id: EntityState
+    name: entity-state
     module: ambjs-common-module
     version: 0.0.1-beta.0
   - id: HttpCall
@@ -36,8 +36,8 @@ page:
           - [right, 24px]
           - [top, 36px]
   directives:
-    - ref: GlobalState
-      id: GlobalStateIns01
+    - ref: EntityState
+      id: EntityStateIns01
       input:
         name:
           type: literal

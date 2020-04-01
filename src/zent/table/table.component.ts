@@ -9,12 +9,12 @@ import {
   Input,
   BasicState,
 } from "@amoebajs/builder";
+import { HttpCallDirective } from "../../common/common.module";
 import { ZentBaseCssDirective } from "../directives/base-css.directive";
 import { ZentComponent } from "../base/base.component";
 import { ZentComponentImportDirective } from "../directives/base-import.directive";
 import { IUniversalTable, IUniversalTableColumn, TableColumnMode } from "./typing";
 import { ZentLoadingDirective } from "../loading/loading.directive";
-import { HttpCallDirective } from "../../common/directives/http-call.directive";
 
 @Component({
   name: "universal-table",

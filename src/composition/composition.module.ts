@@ -10,4 +10,4 @@ import { LoadingGridComposition } from "./loading-grid";
 })
 export class CompositionModule {}
 
-export { DemoComposition };
+export { DemoComposition, LoadingGridComposition };
