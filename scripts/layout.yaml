@@ -10,19 +10,11 @@ components:
     name: stack-layout
     module: ambjs-layout-module
     version: 0.0.1-beta.0
-  - id: ZentButton
-    name: button
-    module: zent-module
-    version: "0.0.1"
 directives:
   - id: GlobalState
     name: global-state
     module: ambjs-common-module
     version: "0.0.1-beta.0"
-  - id: ZentCssImport
-    name: base-css
-    module: zent-module
-    version: "0.0.1"
 compositions:
   - id: DemoComposition
     name: demo-composition
@@ -59,8 +51,6 @@ page:
           - [2, 40]
           - [3, 30]
   directives:
-    - ref: ZentCssImport
-      id: ZentCssImportInstance01
     - ref: GlobalState
       id: GlobalStateInstance01
       input:
@@ -93,36 +83,6 @@ page:
               background:
                 type: literal
                 expression: "#888888"
-          children:
-            - ref: ZentButton
-              id: ZentButtonInstance02
-              props:
-                children:
-                  type: literal
-                  syntaxType: string
-                  expression: BUTTON01
-            - ref: ZentButton
-              id: ZentButtonInstance03
-              props:
-                children:
-                  type: literal
-                  syntaxType: string
-                  expression: BUTTON02
-                type:
-                  type: literal
-                  syntaxType: string
-                  expression: primary
-            - ref: ZentButton
-              id: ZentButtonInstance04
-              props:
-                children:
-                  type: literal
-                  syntaxType: string
-                  expression: BUTTON03
-                type:
-                  type: literal
-                  syntaxType: string
-                  expression: danger
     - ref: GridLayout
       id: GridLayoutChild02
       input:
@@ -166,24 +126,6 @@ page:
           background:
             type: literal
             expression: "rgb(54, 158, 106)"
-      children:
-        - ref: ZentButton
-          id: ZentButtonInstance01
-          props:
-            loading:
-              type: state
-              expression: boolState
-            children:
-              type: state
-              expression: buttonName
-            size:
-              type: literal
-              syntaxType: string
-              expression: large
-            type:
-              type: literal
-              syntaxType: string
-              expression: danger
   attach:
     rowStart:
       type: childRefs

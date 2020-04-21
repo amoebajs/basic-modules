@@ -1,10 +1,13 @@
-import "./watch-config";
 import * as fs from "fs";
 import * as path from "path";
 import jsyaml from "js-yaml";
 import chalk from "chalk";
 import { Factory } from "@amoebajs/builder";
-import { CommonModule, LayoutModule, ZentModule, CompositionModule } from "../src";
+import { CommonModule, LayoutModule, CompositionModule } from "../src";
+
+if (process.env.ENV_MODE === "watch") {
+  require("./watch-config");
+}
 
 const openfile = process.argv.find(i => i.startsWith("--open=")) || "--open=layout.yaml";
 const format = process.argv.find(i => i.startsWith("--format=")) || "--format=false";
@@ -37,8 +40,7 @@ const MAIN = `main.${filetype}x`;
 const builder = new Factory()
   .useModule(CommonModule)
   .useModule(LayoutModule)
-  .useModule(CompositionModule)
-  .useModule(ZentModule).builder;
+  .useModule(CompositionModule).builder;
 // console.log(JSON.stringify(demoConf, null, 2));
 // console.log(JSON.stringify(builder["globalMap"].maps, null, "  "));
 builder

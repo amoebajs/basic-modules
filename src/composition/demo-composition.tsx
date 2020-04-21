@@ -1,13 +1,11 @@
 import React from "react";
 import { Composition, ReactComposition, useReconciler, Input, ChildrenSlot } from "@amoebajs/builder";
-// import { ZentButtonComponent, ZentButtonType } from "../zent/components/button.component";
 import { EntityStateDirective, CustomClickDirective } from "../common/common.module";
 import { GridLayout } from "../layout/grid-layout.component";
 import { StackLayout } from "../layout/stack-layout.component";
 
 const Grid = useReconciler(GridLayout);
 const Stack = useReconciler(StackLayout);
-// const Button = useReconciler(ZentButtonComponent);
 const RootState = useReconciler(EntityStateDirective);
 const CustomClick = useReconciler(CustomClickDirective);
 
@@ -86,11 +84,6 @@ export class DemoComposition extends ReactComposition {
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
-            {/* <Button size="large" loading={`!${this.loadingStateName} | bind:state`}>
-              <Button.Inputs>
-                <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
-              </Button.Inputs>
-            </Button> */}
           </Stack>
           <Stack>
             <Stack.Inputs>
@@ -107,11 +100,6 @@ export class DemoComposition extends ReactComposition {
                 <CustomClick.expression value={eventHandler} />
               </CustomClick.Inputs>
             </CustomClick>
-            {/* <Button size="large" loading={`${this.loadingStateName} | bind:state`}>
-              <Button.Inputs>
-                <Button.ztType>{ZentButtonType.Danger}</Button.ztType>
-              </Button.Inputs>
-            </Button> */}
           </Stack>
         </Grid>
         <Grid>
