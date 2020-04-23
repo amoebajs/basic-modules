@@ -17,14 +17,14 @@ export class CustomClickDirective extends ReactDirective {
 
   protected async onAttach() {
     try {
-      this.render.appendJsxAttribute(
+      this.render.component.appendJsxAttribute(
         this.host!,
         this.attrName!,
         this.helper.createJsxArrowEventHandler(
           this.engine.createIdentifier(
             this.helper.useComplexLogicExpression(
               { type: "complexLogic", expression: this.expression },
-              this.render.getRootState(BasicState.ContextInfo).name,
+              this.render.component.getState(BasicState.ContextInfo).name,
             ),
           ),
         ),

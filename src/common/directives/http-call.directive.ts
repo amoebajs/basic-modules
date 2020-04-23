@@ -38,7 +38,7 @@ export class HttpCallDirective extends ReactDirective {
 
   protected async onAttach() {
     await super.onAttach();
-    this.render.appendRootVariable(
+    this.render.component.appendVariable(
       this.hcRequestName.name,
       this.helper.__engine.createIdentifier(
         `(options: any = {}) => ${this.hcAxiosImport.name}(${this.createAxiosParams()})`,

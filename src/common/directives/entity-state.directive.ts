@@ -18,7 +18,7 @@ export class EntityStateDirective extends ReactDirective {
 
   protected async onInit() {
     await super.onInit();
-    this.render.setRootState(BasicState.ContextInfo, {
+    this.render.component.setState(BasicState.ContextInfo, {
       name: this.defaultStateName,
     });
   }
@@ -27,8 +27,8 @@ export class EntityStateDirective extends ReactDirective {
     await super.onAttach();
     this.createStates();
     // 延迟创建上下文对象，可以更好的收集变量
-    this.render.appendRootFnBeforeRender(() => {
-      this.render.appendRootVariable(this.defaultStateName, this.createContextBody());
+    this.render.component.appendFnBeforeRender(() => {
+      this.render.component.appendVariable(this.defaultStateName, this.createContextBody());
     });
   }
 
@@ -39,12 +39,12 @@ export class EntityStateDirective extends ReactDirective {
   }
 
   private createStates() {
-    this.defaultStates.forEach(([name, value]) => this.render.appendRootState(name, value));
+    this.defaultStates.forEach(([name, value]) => this.render.component.appendState(name, value));
   }
 
   private createState() {
     return this.engine.createObjectLiteral(
-      this.render.getRootStates().map(i => {
+      this.render.component.getStates().map(i => {
         const name = getReactStateName(i);
         return this.engine.createPropertyAssignment(
           name,

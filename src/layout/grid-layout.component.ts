@@ -135,7 +135,7 @@ export class GridLayout extends BasicLayout {
     const style = styleAttr.getValue();
     // style参数通过函数创建，这里使用后处理来直接修改AST结构
     if (typeof style === "function") {
-      this.render.appendJsxStyles(generator, styles);
+      this.render.component.appendJsxStyles(generator, styles);
     } else {
       // 不存在或者不支持处理其他的情况
     }
