@@ -23,7 +23,7 @@ export class CustomClickDirective extends ReactDirective {
         this.helper.createJsxArrowEventHandler(
           this.engine.createIdentifier(
             this.helper.useComplexLogicExpression(
-              { type: "complexLogic", expression: this.expression },
+              this.expression,
               this.render.component.getState(BasicState.ContextInfo).name,
             ),
           ),
