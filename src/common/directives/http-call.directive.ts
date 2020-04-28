@@ -56,6 +56,6 @@ export class HttpCallDirective extends ReactDirective {
       .filter(([, v]) => !Utils.is.nullOrUndefined(v))
       .map(([k, v]) => `${k}: ${v}`)
       .join(", ");
-    return `{ ${content.length === 0 ? "" : ", "}...options }`;
+    return `{ ${content}${content.length === 0 ? "" : ", "}...options }`;
   }
 }
