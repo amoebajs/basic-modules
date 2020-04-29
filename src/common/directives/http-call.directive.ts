@@ -16,7 +16,7 @@ export enum HttpMethod {
   },
 })
 export class HttpCallDirective extends ReactDirective {
-  @Input({ name: "name", useEnums: Utils.getEnumValues(HttpMethod) })
+  @Input({ name: "method", useEnums: Utils.getEnumValues(HttpMethod) })
   public hcMethod?: HttpMethod;
 
   @Input({ name: "path" })
