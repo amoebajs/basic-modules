@@ -26,7 +26,7 @@ export class EntityStateDirective extends ReactDirective {
   }
 
   private createStates() {
-    this.defaultStates.forEach(([name, value]) => this.render.component.appendState(name, value));
+    this.defaultStates.forEach(([name, value]) => this.render.component.appendState(name, JSON.stringify(value)));
   }
 }
 
